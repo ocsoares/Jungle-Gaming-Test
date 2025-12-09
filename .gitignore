@@ -41,3 +41,4 @@ lerna-debug.log*
 TODO.md
 pgdata
 .turbo
+**/node_modules/
