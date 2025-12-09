@@ -42,3 +42,5 @@ TODO.md
 pgdata
 .turbo
 **/node_modules/
+**/dist/
+*.tsbuildinfo

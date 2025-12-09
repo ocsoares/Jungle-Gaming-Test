@@ -21,10 +21,13 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "baseUrl": ".",
+    "baseUrl": "../../",
+    "types": ["node"],
     "paths": {
-      "@types/*": ["../types/*"],
-      "@utils/*": ["../utils/*"]
+      "@config": ["packages/config/dist/index"],
+      "@config/*": ["packages/config/dist/*"],
+      "@utils/*": ["packages/utils/src/*"],
+      "@types/*": ["packages/types/src/*"]
     }
   }
 }
