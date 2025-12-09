@@ -24,8 +24,10 @@
     "baseUrl": "../../",
     "types": ["node"],
     "paths": {
-      "@config": ["packages/config/dist/index"],
-      "@config/*": ["packages/config/dist/*"],
+      "@repo/config": ["packages/config/dist/index"],
+      "@repo/config/*": ["packages/config/dist/*"],
+      "@repo/contracts": ["packages/contracts/dist/index"],
+      "@repo/contracts/*": ["packages/contracts/dist/*"],
       "@utils/*": ["packages/utils/src/*"],
       "@types/*": ["packages/types/src/*"]
     }
