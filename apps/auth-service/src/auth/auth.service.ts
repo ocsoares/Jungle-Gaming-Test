@@ -2,8 +2,8 @@ import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { LoginDTO } from "@repo/contracts/auth";
 import * as bcrypt from "bcrypt";
-import { InvalidUserCredentials } from "./exceptions/user/user.exceptions";
-import { IUserRepository } from "./repositories/abstracts/user.repository.interface";
+import { IUserRepository } from "../repositories/abstracts/user.repository.interface";
+import { InvalidUserCredentialsRpcException } from "./exceptions/user/user.exceptions";
 import { JwtPayload } from "./types/jwt-payload.type";
 
 @Injectable()
@@ -17,18 +17,17 @@ export class AuthService {
         const userByEmail = await this.userRepository.findByEmail(data.email);
 
         if (!userByEmail) {
-            console.log("NÃO Existe !!!!!");
-            throw new InvalidUserCredentials();
+            throw new InvalidUserCredentialsRpcException();
         }
 
-        // ver isso certo pq acho q NÃO vai vir da Entity a "password" !!!
+        // ver isso certo pq acho q NÃO vai vir da Entity a "password" !!!!
         const isPasswordValid = await bcrypt.compare(
             data.password,
             userByEmail.password,
         );
 
         if (!isPasswordValid) {
-            throw new InvalidUserCredentials();
+            throw new InvalidUserCredentialsRpcException();
         }
 
         const payload: JwtPayload = {

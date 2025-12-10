@@ -1,8 +1,31 @@
 import { Module } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
+import { ClientsModule, Transport } from "@nestjs/microservices";
+import { AUTH_SERVICE_NAME } from "@repo/config/constants";
+import serverConfig from "@repo/config/server.config";
 import { AuthController } from "./auth/auth.controller";
 
 @Module({
-    imports: [],
+    imports: [
+        ConfigModule.forRoot({
+            isGlobal: true,
+            envFilePath: [
+                ".env",
+                "../../.env", // env raiz
+            ],
+            load: [serverConfig],
+        }),
+        ClientsModule.register([
+            {
+                name: AUTH_SERVICE_NAME,
+                transport: Transport.TCP,
+                options: {
+                    host: String(process.env.AUTH_SERVICE_HOST || "localhost"),
+                    port: Number(process.env.AUTH_SERVICE_PORT),
+                },
+            },
+        ]),
+    ],
     controllers: [AuthController],
     providers: [],
 })

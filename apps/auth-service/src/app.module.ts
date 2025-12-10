@@ -6,9 +6,9 @@ import serverConfig from "@repo/config/server.config";
 import { UserEntity } from "@repo/typeorm/entities";
 import { AuthController } from "./auth/auth.controller";
 import { AuthService } from "./auth/auth.service";
-import { TypeOrmOwnModule } from "./auth/database/typeormown.module";
-import { IUserRepository } from "./auth/repositories/abstracts/user.repository.interface";
-import { UserRepository } from "./auth/repositories/implementations/user.repository";
+import { TypeOrmOwnModule } from "./database/typeormown.module";
+import { IUserRepository } from "./repositories/abstracts/user.repository.interface";
+import { UserRepository } from "./repositories/implementations/user.repository";
 
 @Module({
     imports: [
