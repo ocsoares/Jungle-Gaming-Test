@@ -8,6 +8,10 @@ export interface IServerConfig {
         password?: string;
         database?: string;
     };
+    rabbitmq: {
+        username?: string;
+        password?: string;
+    };
 }
 
 export default registerAs<IServerConfig>("server", () => {
@@ -18,8 +22,12 @@ export default registerAs<IServerConfig>("server", () => {
                 ? parseInt(process.env.POSTGRES_PORT, 10)
                 : 5432,
             username: process.env.POSTGRES_USER || "postgres",
-            password: process.env.POSTGRES_PASSWORD || "postgres",
-            database: process.env.POSTGRES_DB || "postgres",
+            password: process.env.POSTGRES_PASSWORD || "postgres123",
+            database: process.env.POSTGRES_DB || "postgres_db",
+        },
+        rabbitmq: {
+            username: process.env.RABBITMQ_DEFAULT_USER || "rabbit",
+            password: process.env.RABBITMQ_DEFAULT_PASS || "rabbit123",
         },
     };
 });

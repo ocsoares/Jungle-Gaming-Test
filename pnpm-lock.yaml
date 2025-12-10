@@ -233,6 +233,16 @@ importers:
         specifier: ^6.1.2
         version: 6.1.2
 
+  packages/exceptions/user:
+    dependencies:
+      '@nestjs/common':
+        specifier: ^11.1.9
+        version: 11.1.9(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2)
+    devDependencies:
+      rimraf:
+        specifier: ^6.1.2
+        version: 6.1.2
+
   packages/tsconfig: {}
 
 packages:
