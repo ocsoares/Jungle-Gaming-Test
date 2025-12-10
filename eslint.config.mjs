@@ -20,7 +20,7 @@ export default defineConfig(
         languageOptions: {
             parser: typeScriptParser,
             parserOptions: {
-                project: ["apps/*/tsconfig.json", "packages/*/tsconfig.json"],
+                project: ["apps/*/tsconfig.json", "packages/**/tsconfig.json"],
                 tsconfigRootDir: __dirname,
                 ecmaVersion: 2020,
                 sourceType: "module",

@@ -5,10 +5,15 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc -p tsconfig.json"
+    "clean": "rimraf dist tsconfig.tsbuildinfo",
+    "build": "pnpm run clean && tsc -p tsconfig.json",
+    "build:force": "pnpm run clean && tsc -p tsconfig.json --force"
   },
   "dependencies": {
     "@nestjs/config": "^4.0.2",
     "class-validator": "^0.14.3"
+  },
+  "devDependencies": {
+    "rimraf": "^6.1.2"
   }
 }
