@@ -5,6 +5,8 @@
     "rootDir": "./src",
     "outDir": "./dist",
     "paths": {
+      "@repo/user-exceptions": ["../../packages/exceptions/user/dist/index"],
+      "@repo/user-exceptions/*": ["../../packages/exceptions/user/dist/*"],
       "@repo/typeorm": ["../../packages/database/typeorm/dist/index"],
       "@repo/typeorm/*": ["../../packages/database/typeorm/dist/*"],
       "@repo/contracts": ["../../packages/contracts/dist/index"],

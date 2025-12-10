@@ -9,8 +9,8 @@ import { UserEntity } from "@repo/typeorm/entities";
         ConfigModule.forRoot({
             isGlobal: true,
             envFilePath: [
-                ".env", // .env do microsserviço
-                "../../.env", // .env da raiz
+                ".env",
+                "../../.env", // env raiz
             ],
             load: [serverConfig],
         }),
@@ -18,6 +18,7 @@ import { UserEntity } from "@repo/typeorm/entities";
             imports: [ConfigModule],
             inject: [ConfigService],
             useFactory: (config: ConfigService) => {
+                // from server.config file with root .env
                 const pg =
                     config.get<IServerConfig["postgres"]>("server.postgres");
 
