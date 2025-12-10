@@ -9,7 +9,7 @@ export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
     @MessagePattern(AUTH_SERVICE_LOGIN_MESSAGE)
-    async login(@Payload() payload: LoginDTO) {
+    async login(@Payload() payload: LoginDTO): Promise<string> {
         return await this.authService.login(payload);
     }
 }
