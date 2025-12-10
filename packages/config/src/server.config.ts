@@ -12,6 +12,10 @@ export interface IServerConfig {
         username?: string;
         password?: string;
     };
+    auth_service: {
+        host?: string;
+        port?: number;
+    };
 }
 
 export default registerAs<IServerConfig>("server", () => {
@@ -28,6 +32,10 @@ export default registerAs<IServerConfig>("server", () => {
         rabbitmq: {
             username: process.env.RABBITMQ_DEFAULT_USER || "rabbit",
             password: process.env.RABBITMQ_DEFAULT_PASS || "rabbit123",
+        },
+        auth_service: {
+            host: process.env.AUTH_SERVICE_HOST,
+            port: Number(process.env.AUTH_SERVICE_PORT),
         },
     };
 });

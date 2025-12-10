@@ -2,6 +2,7 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { JwtModule } from "@nestjs/jwt";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import serverConfig from "@repo/config/server.config";
 import { UserEntity } from "@repo/typeorm/entities";
 import { AuthController } from "./auth/auth.controller";
 import { AuthService } from "./auth/auth.service";
@@ -13,6 +14,11 @@ import { UserRepository } from "./auth/repositories/implementations/user.reposit
     imports: [
         ConfigModule.forRoot({
             isGlobal: true,
+            envFilePath: [
+                ".env",
+                "../../.env", // env raiz
+            ],
+            load: [serverConfig],
         }),
         TypeOrmOwnModule,
         TypeOrmModule.forFeature([UserEntity]),
