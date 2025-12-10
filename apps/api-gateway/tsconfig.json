@@ -1,9 +1,13 @@
 {
   "extends": "@repo/tsconfig/nest.json",
   "compilerOptions": {
-    "rootDir": "./src",
-    "outDir": "./dist"
+    "baseUrl": ".",
+    "paths": {
+      "@repo/contracts": ["../../packages/contracts/src/index"],
+      "@repo/contracts/*": ["../../packages/contracts/src/*"],
+      "@repo/config": ["../../packages/config/src/index"],
+      "@repo/config/*": ["../../packages/config/src/*"]
+    }
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src"]
 }
