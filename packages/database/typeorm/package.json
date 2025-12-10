@@ -1,0 +1,18 @@
+{
+  "name": "@repo/typeorm",
+  "private": true,
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "clean": "rimraf dist tsconfig.tsbuildinfo",
+    "build": "pnpm run clean && tsc -p tsconfig.json",
+    "build:force": "pnpm run clean && tsc -p tsconfig.json --force"
+  },
+  "dependencies": {
+    "typeorm": "^0.3.28"
+  },
+  "devDependencies": {
+    "rimraf": "^6.1.2"
+  }
+}
