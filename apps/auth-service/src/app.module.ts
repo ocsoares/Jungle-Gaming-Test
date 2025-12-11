@@ -9,6 +9,9 @@ import { AuthService } from "./auth/auth.service";
 import { TypeOrmOwnModule } from "./database/typeormown.module";
 import { IUserRepository } from "./repositories/abstracts/user.repository.interface";
 import { UserRepository } from "./repositories/implementations/user.repository";
+import { UserMapper } from "./user/mapper/user.mapper";
+import { UserController } from "./user/user.controller";
+import { UserService } from "./user/user.service";
 
 @Module({
     imports: [
@@ -29,11 +32,12 @@ import { UserRepository } from "./repositories/implementations/user.repository";
             },
         }),
     ],
-    controllers: [AuthController],
+    controllers: [AuthController, UserController],
     providers: [
         AuthService,
         { provide: IUserRepository, useClass: UserRepository },
+        UserService,
+        UserMapper,
     ],
-    exports: [AuthService],
 })
 export class AppModule {}

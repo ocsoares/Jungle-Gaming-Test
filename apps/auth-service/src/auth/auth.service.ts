@@ -13,14 +13,14 @@ export class AuthService {
         private readonly jwtService: JwtService,
     ) {}
 
-    async login(data: LoginDTO): Promise<string> {
+    async login(data: LoginDTO): Promise<{ token: string }> {
         const userByEmail = await this.userRepository.findByEmail(data.email);
 
         if (!userByEmail) {
             throw new InvalidUserCredentialsRpcException();
         }
 
-        // ver isso certo pq acho q NÃO vai vir da Entity a "password" !!!!
+        // ver isso certo pq acho q NÃO vai vir da Entity a "password" !!!
         const isPasswordValid = await bcrypt.compare(
             data.password,
             userByEmail.password,
@@ -36,6 +36,8 @@ export class AuthService {
             username: userByEmail.username,
         };
 
-        return await this.jwtService.signAsync(payload);
+        return {
+            token: await this.jwtService.signAsync(payload),
+        };
     }
 }
