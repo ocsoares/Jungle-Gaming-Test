@@ -4,6 +4,7 @@
     "baseUrl": ".",
     "rootDir": "./src",
     "outDir": "./dist",
+    "types": ["node", "jest"],
     "paths": {
       "@repo/user-exceptions": ["../../packages/exceptions/user/dist/index"],
       "@repo/user-exceptions/*": ["../../packages/exceptions/user/dist/*"],
