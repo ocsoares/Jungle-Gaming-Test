@@ -58,11 +58,17 @@ export class RpcToHttpExceptionFilter implements ExceptionFilter {
         fallbackStatus: number = HttpStatus.INTERNAL_SERVER_ERROR,
         fallbackMessage: string = "Internal server error",
     ): NormalizedError {
-        return {
-            status: source?.statusCode ?? source?.status ?? fallbackStatus,
-            message:
-                source?.message ?? source?.response?.message ?? fallbackMessage,
-            error: source?.error ?? source?.response?.error ?? "Error",
-        };
+        let status = source?.statusCode ?? source?.status ?? fallbackStatus;
+
+        if (typeof status !== "number" || isNaN(status)) {
+            status = fallbackStatus;
+        }
+
+        const message =
+            source?.message ?? source?.response?.message ?? fallbackMessage;
+
+        const error = source?.error ?? source?.response?.error ?? "Error";
+
+        return { status, message, error };
     }
 }
