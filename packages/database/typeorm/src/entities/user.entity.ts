@@ -17,7 +17,7 @@ export class UserEntity {
     @Column({ unique: true })
     readonly email: string;
 
-    @Column({ select: false, length: 256 })
+    @Column({ length: 256 })
     readonly password: string;
 
     @CreateDateColumn()
