@@ -1,4 +1,4 @@
-import { Body, Controller, Inject, Post } from "@nestjs/common";
+import { Body, Controller, HttpCode, Inject, Post } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import {
     AUTH_SERVICE_LOGIN_MESSAGE,
@@ -16,6 +16,7 @@ export class AuthController {
     ) {}
 
     @Post("login")
+    @HttpCode(200)
     async login(@Body() body: LoginDTO): Promise<any> {
         return await firstValueFrom(
             this.clientProxy.send(AUTH_SERVICE_LOGIN_MESSAGE, body),
@@ -23,6 +24,7 @@ export class AuthController {
     }
 
     @Post("refresh")
+    @HttpCode(200)
     async refreshLogin(@Body() body: LoginDTO): Promise<any> {
         return await firstValueFrom(
             this.clientProxy.send(AUTH_SERVICE_REFRESH_LOGIN_MESSAGE, body),
