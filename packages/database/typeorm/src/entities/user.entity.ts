@@ -2,9 +2,11 @@ import {
     Column,
     CreateDateColumn,
     Entity,
+    ManyToMany,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from "typeorm";
+import { TaskEntity } from "./task.entity";
 
 @Entity({ name: "users" })
 export class UserEntity {
@@ -25,4 +27,7 @@ export class UserEntity {
 
     @UpdateDateColumn()
     readonly updatedAt: Date;
+
+    @ManyToMany(() => TaskEntity, (task) => task.users)
+    tasks: TaskEntity[];
 }

@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { IServerConfig } from "@repo/config/server.config";
-import { UserEntity } from "@repo/typeorm/entities";
+import { TaskEntity, UserEntity } from "@repo/typeorm/entities";
 
 @Module({
     imports: [
@@ -20,7 +20,7 @@ import { UserEntity } from "@repo/typeorm/entities";
                     username: pg!.username,
                     password: pg!.password,
                     database: pg!.database,
-                    entities: [UserEntity],
+                    entities: [UserEntity, TaskEntity],
                 };
             },
         }),
