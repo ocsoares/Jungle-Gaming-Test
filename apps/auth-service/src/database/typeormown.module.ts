@@ -21,7 +21,6 @@ import { UserEntity } from "@repo/typeorm/entities";
                     password: pg!.password,
                     database: pg!.database,
                     entities: [UserEntity],
-                    synchronize: true,
                 };
             },
         }),
