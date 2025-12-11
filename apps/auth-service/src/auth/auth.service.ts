@@ -8,9 +8,6 @@ import { ILoginResponse } from "./response/login.response";
 import { JwtPayload } from "./types/jwt-payload.type";
 import { TokenUtils } from "./utils/token.utils";
 
-// FAZER ISSO: Tokens: accessToken (15 min) e refreshToken (7 dias) + endpoint de refresh. !!!
-// OBS: Usar o MESMO "this.login" para REFRESH, mas separar a parte de GERAR Token em um Método para reutilizar !!!!
-
 @Injectable()
 export class AuthService {
     constructor(
