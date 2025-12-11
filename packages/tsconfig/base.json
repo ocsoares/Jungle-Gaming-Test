@@ -21,6 +21,6 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "types": ["node"]
+    "types": ["node", "jest"]
   }
 }
