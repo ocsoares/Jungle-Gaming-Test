@@ -4,6 +4,7 @@ import { LoginDTO } from "@repo/contracts/auth";
 import * as bcrypt from "bcrypt";
 import { IUserRepository } from "../repositories/abstracts/user.repository.interface";
 import { InvalidUserCredentialsRpcException } from "./exceptions/user/user.exceptions";
+import { ILoginResponse } from "./response/login.response";
 import { JwtPayload } from "./types/jwt-payload.type";
 
 @Injectable()
@@ -13,7 +14,7 @@ export class AuthService {
         private readonly jwtService: JwtService,
     ) {}
 
-    async login(data: LoginDTO): Promise<{ token: string }> {
+    async login(data: LoginDTO): Promise<ILoginResponse> {
         const userByEmail = await this.userRepository.findByEmail(data.email);
 
         if (!userByEmail) {
