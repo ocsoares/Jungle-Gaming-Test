@@ -310,6 +310,12 @@ importers:
 
   packages/database/typeorm:
     dependencies:
+      dotenv:
+        specifier: ^17.2.3
+        version: 17.2.3
+      reflect-metadata:
+        specifier: ^0.2.2
+        version: 0.2.2
       typeorm:
         specifier: ^0.3.28
         version: 0.3.28(pg@8.16.3)(ts-node@10.9.2(@swc/core@1.15.3)(@types/node@22.19.1)(typescript@5.9.3))

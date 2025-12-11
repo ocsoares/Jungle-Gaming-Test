@@ -1,10 +1,11 @@
-import { TaskEntity, UserEntity } from "@repo/typeorm/entities";
 import { config } from "dotenv";
+import path from "path";
 import "reflect-metadata";
 import { DataSource } from "typeorm";
+import { TaskEntity, UserEntity } from "./entities";
 
 // .env root
-config({ path: "../../.env" });
+config({ path: path.resolve(__dirname, "../../../../.env") });
 
 export const AppDataSource = new DataSource({
     type: "postgres",

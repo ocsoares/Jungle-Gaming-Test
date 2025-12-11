@@ -10,6 +10,8 @@
     "build:force": "pnpm run clean && tsc -p tsconfig.json --force"
   },
   "dependencies": {
+    "dotenv": "^17.2.3",
+    "reflect-metadata": "^0.2.2",
     "typeorm": "^0.3.28"
   },
   "devDependencies": {
