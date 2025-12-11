@@ -3,6 +3,7 @@ import { ClientProxy } from "@nestjs/microservices";
 import {
     AUTH_SERVICE_LOGIN_MESSAGE,
     AUTH_SERVICE_NAME,
+    AUTH_SERVICE_REFRESH_LOGIN_MESSAGE,
     AUTH_SERVICE_REGISTER_MESSAGE,
 } from "@repo/config/constants";
 import { LoginDTO, RegisterUserDTO } from "@repo/contracts/auth/index";
@@ -18,6 +19,13 @@ export class AuthController {
     async login(@Body() body: LoginDTO): Promise<any> {
         return await firstValueFrom(
             this.clientProxy.send(AUTH_SERVICE_LOGIN_MESSAGE, body),
+        );
+    }
+
+    @Post("refresh")
+    async refreshLogin(@Body() body: LoginDTO): Promise<any> {
+        return await firstValueFrom(
+            this.clientProxy.send(AUTH_SERVICE_REFRESH_LOGIN_MESSAGE, body),
         );
     }
 

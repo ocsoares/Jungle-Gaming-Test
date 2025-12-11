@@ -6,22 +6,44 @@ import { IUserRepository } from "../repositories/abstracts/user.repository.inter
 import { InvalidUserCredentialsRpcException } from "./exceptions/user/user.exceptions";
 import { ILoginResponse } from "./response/login.response";
 import { JwtPayload } from "./types/jwt-payload.type";
+import { TokenUtils } from "./utils/token.utils";
+
+// FAZER ISSO: Tokens: accessToken (15 min) e refreshToken (7 dias) + endpoint de refresh. !!!
+// OBS: Usar o MESMO "this.login" para REFRESH, mas separar a parte de GERAR Token em um Método para reutilizar !!!!
 
 @Injectable()
 export class AuthService {
     constructor(
         private readonly userRepository: IUserRepository,
         private readonly jwtService: JwtService,
+        private readonly tokenUtils: TokenUtils,
     ) {}
 
     async login(data: LoginDTO): Promise<ILoginResponse> {
+        const payload = await this.validateCredentials(data);
+
+        return await this.tokenUtils.generateAccessToken(
+            this.jwtService,
+            payload,
+        );
+    }
+
+    async loginRefresh(data: LoginDTO): Promise<ILoginResponse> {
+        const payload = await this.validateCredentials(data);
+
+        return await this.tokenUtils.generateRefreshToken(
+            this.jwtService,
+            payload,
+        );
+    }
+
+    private async validateCredentials(data: LoginDTO): Promise<JwtPayload> {
         const userByEmail = await this.userRepository.findByEmail(data.email);
 
         if (!userByEmail) {
             throw new InvalidUserCredentialsRpcException();
         }
 
-        // ver isso certo pq acho q NÃO vai vir da Entity a "password" !!!
         const isPasswordValid = await bcrypt.compare(
             data.password,
             userByEmail.password,
@@ -37,8 +59,6 @@ export class AuthService {
             username: userByEmail.username,
         };
 
-        return {
-            token: await this.jwtService.signAsync(payload),
-        };
+        return payload;
     }
 }

@@ -1,6 +1,9 @@
 import { Controller } from "@nestjs/common";
 import { MessagePattern, Payload } from "@nestjs/microservices";
-import { AUTH_SERVICE_LOGIN_MESSAGE } from "@repo/config/constants";
+import {
+    AUTH_SERVICE_LOGIN_MESSAGE,
+    AUTH_SERVICE_REFRESH_LOGIN_MESSAGE,
+} from "@repo/config/constants";
 import { LoginDTO } from "@repo/contracts/auth";
 import { AuthService } from "./auth.service";
 import { ILoginResponse } from "./response/login.response";
@@ -12,5 +15,10 @@ export class AuthController {
     @MessagePattern(AUTH_SERVICE_LOGIN_MESSAGE)
     async login(@Payload() payload: LoginDTO): Promise<ILoginResponse> {
         return await this.authService.login(payload);
+    }
+
+    @MessagePattern(AUTH_SERVICE_REFRESH_LOGIN_MESSAGE)
+    async refreshLogin(@Payload() payload: LoginDTO): Promise<ILoginResponse> {
+        return await this.authService.loginRefresh(payload);
     }
 }

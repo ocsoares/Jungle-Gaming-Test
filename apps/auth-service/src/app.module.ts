@@ -6,6 +6,7 @@ import serverConfig from "@repo/config/server.config";
 import { UserEntity } from "@repo/typeorm/entities";
 import { AuthController } from "./auth/auth.controller";
 import { AuthService } from "./auth/auth.service";
+import { TokenUtils } from "./auth/utils/token.utils";
 import { TypeOrmOwnModule } from "./database/typeormown.module";
 import { IUserRepository } from "./repositories/abstracts/user.repository.interface";
 import { UserRepository } from "./repositories/implementations/user.repository";
@@ -28,7 +29,7 @@ import { UserService } from "./user/user.service";
         JwtModule.register({
             secret: process.env.JWT_SECRET,
             signOptions: {
-                expiresIn: Number(process.env.JWT_EXPIRES_IN),
+                expiresIn: Number(process.env.JWT_ACCESS_TOKEN_EXPIRES_IN),
             },
         }),
     ],
@@ -38,6 +39,7 @@ import { UserService } from "./user/user.service";
         { provide: IUserRepository, useClass: UserRepository },
         UserService,
         UserMapper,
+        TokenUtils,
     ],
 })
 export class AppModule {}
