@@ -1,4 +1,3 @@
-// apps/api-gateway/src/filters/rpc-to-http-exception.filter.ts
 import {
     ArgumentsHost,
     Catch,
