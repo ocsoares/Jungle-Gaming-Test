@@ -1,0 +1,20 @@
+{
+  "extends": "@repo/tsconfig/nest.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "types": ["node", "jest"],
+    "paths": {
+      "@repo/user-exceptions": ["../../packages/exceptions/user/dist/index"],
+      "@repo/user-exceptions/*": ["../../packages/exceptions/user/dist/*"],
+      "@repo/typeorm": ["../../packages/database/typeorm/dist/index"],
+      "@repo/typeorm/*": ["../../packages/database/typeorm/dist/*"],
+      "@repo/contracts": ["../../packages/contracts/dist/index"],
+      "@repo/contracts/*": ["../../packages/contracts/dist/*"],
+      "@repo/config": ["../../packages/config/dist/index"],
+      "@repo/config/*": ["../../packages/config/dist/*"]
+    }
+  },
+  "include": ["src"]
+}
