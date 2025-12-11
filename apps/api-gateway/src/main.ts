@@ -1,4 +1,4 @@
-import { Logger } from "@nestjs/common";
+import { Logger, ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 import { RpcToHttpExceptionFilter } from "./filters/rcp-to-http-exception.filter";
@@ -10,6 +10,13 @@ async function bootstrap() {
 
     app.setGlobalPrefix(GLOBAL_PREFIX);
     app.useGlobalFilters(new RpcToHttpExceptionFilter());
+
+    app.useGlobalPipes(
+        new ValidationPipe({
+            whitelist: true,
+            forbidNonWhitelisted: true,
+        }),
+    );
 
     await app.listen(Number(process.env.API_GATEWAY_PORT));
 
