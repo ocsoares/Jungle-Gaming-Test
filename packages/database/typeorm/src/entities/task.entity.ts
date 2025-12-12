@@ -51,7 +51,7 @@ export class TaskEntity {
 
     @ManyToMany(() => UserEntity, (user) => user.tasks)
     @JoinTable({
-        name: "tasks_users", // tabela de junção
+        name: "tasks_users",
         joinColumn: { name: "task_id", referencedColumnName: "id" },
         inverseJoinColumn: { name: "user_id", referencedColumnName: "id" },
     })
