@@ -18,4 +18,5 @@ export interface ITaskResponse {
     readonly due_date: string;
     readonly priority: Priority;
     readonly status: Status;
+    readonly usersId: string[];
 }

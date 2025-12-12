@@ -1,4 +1,10 @@
-import { IsDateString, IsEnum, IsNotEmpty, IsString } from "class-validator";
+import {
+    IsDateString,
+    IsEnum,
+    IsNotEmpty,
+    IsString,
+    IsUUID,
+} from "class-validator";
 
 enum Priority {
     LOW = "low",
@@ -34,4 +40,9 @@ export class CreateTaskDTO {
     @IsNotEmpty()
     @IsEnum(Status)
     readonly status: Status;
+
+    @IsNotEmpty({ each: true })
+    @IsString({ each: true })
+    @IsUUID("4", { each: true })
+    readonly usersId: string[];
 }

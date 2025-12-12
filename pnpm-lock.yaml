@@ -68,6 +68,12 @@ importers:
       '@nestjs/platform-express':
         specifier: ^11.0.1
         version: 11.1.9(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)
+      '@repo/config':
+        specifier: workspace:*
+        version: link:../../packages/config
+      '@repo/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
       class-validator:
         specifier: ^0.14.3
         version: 0.14.3
@@ -138,6 +144,18 @@ importers:
       '@nestjs/typeorm':
         specifier: ^11.0.0
         version: 11.0.0(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(reflect-metadata@0.2.2)(rxjs@7.8.2)(typeorm@0.3.28(pg@8.16.3)(ts-node@10.9.2(@swc/core@1.15.3)(@types/node@22.19.1)(typescript@5.9.3)))
+      '@repo/config':
+        specifier: workspace:*
+        version: link:../../packages/config
+      '@repo/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
+      '@repo/typeorm':
+        specifier: workspace:*
+        version: link:../../packages/database/typeorm
+      '@repo/user-exceptions':
+        specifier: workspace:*
+        version: link:../../packages/exceptions/user
       bcrypt:
         specifier: ^6.0.0
         version: 6.0.0
@@ -226,6 +244,18 @@ importers:
       '@nestjs/typeorm':
         specifier: ^11.0.0
         version: 11.0.0(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(reflect-metadata@0.2.2)(rxjs@7.8.2)(typeorm@0.3.28(pg@8.16.3)(ts-node@10.9.2(@swc/core@1.15.3)(@types/node@22.19.1)(typescript@5.9.3)))
+      '@repo/config':
+        specifier: workspace:*
+        version: link:../../packages/config
+      '@repo/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
+      '@repo/typeorm':
+        specifier: workspace:*
+        version: link:../../packages/database/typeorm
+      '@repo/user-exceptions':
+        specifier: workspace:*
+        version: link:../../packages/exceptions/user
       class-validator:
         specifier: ^0.14.3
         version: 0.14.3

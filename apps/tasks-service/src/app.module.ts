@@ -2,10 +2,12 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import serverConfig from "@repo/config/server.config";
-import { TaskEntity } from "@repo/typeorm/entities";
+import { TaskEntity, UserEntity } from "@repo/typeorm/entities";
 import { TypeOrmOwnModule } from "./database/typeormown.module";
-import { ITaskRepository } from "./repositories/abstract/task.repository.interface";
+import { ITaskRepository } from "./repositories/abstracts/task.repository.interface";
+import { IUserRepository } from "./repositories/abstracts/user.repository.interface";
 import { TaskRepository } from "./repositories/implementations/task.repository";
+import { UserRepository } from "./repositories/implementations/user.repository";
 import { TaskMapper } from "./tasks/mapper/task.mapper";
 import { TasksController } from "./tasks/tasks.controller";
 import { TasksService } from "./tasks/tasks.service";
@@ -21,7 +23,7 @@ import { TasksService } from "./tasks/tasks.service";
             load: [serverConfig],
         }),
         TypeOrmOwnModule,
-        TypeOrmModule.forFeature([TaskEntity]),
+        TypeOrmModule.forFeature([TaskEntity, UserEntity]),
     ],
     controllers: [TasksController],
     providers: [
@@ -29,6 +31,10 @@ import { TasksService } from "./tasks/tasks.service";
         {
             provide: ITaskRepository,
             useClass: TaskRepository,
+        },
+        {
+            provide: IUserRepository,
+            useClass: UserRepository,
         },
         TaskMapper,
     ],

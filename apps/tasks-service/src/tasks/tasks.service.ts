@@ -1,19 +1,47 @@
 import { Injectable } from "@nestjs/common";
+import { RpcException } from "@nestjs/microservices";
 import { CreateTaskDTO } from "@repo/contracts";
-import { ITaskRepository } from "src/repositories/abstract/task.repository.interface";
+import { ITaskRepository } from "src/repositories/abstracts/task.repository.interface";
+import { IUserRepository } from "src/repositories/abstracts/user.repository.interface";
 import { TaskMapper } from "./mapper/task.mapper";
 import { ITaskResponse } from "./response/task.response";
+
+// TODO
+// - Comentários: criar e listar em cada tarefa. <-- isso tem q ser uma Entity pra salvar no Banco ???
+// - Histórico de alterações (audit log simplificado).
 
 @Injectable()
 export class TasksService {
     constructor(
         private readonly taskRepository: ITaskRepository,
+        private readonly userRepository: IUserRepository,
         private readonly taskMapper: TaskMapper,
     ) {}
 
     async create(data: CreateTaskDTO): Promise<ITaskResponse> {
-        const createdTask = await this.taskRepository.create(data);
+        const usersById = await this.userRepository.findByIds(data.usersId);
 
-        return this.taskMapper.toResponse(createdTask);
+        const foundIds = new Set(usersById.map((user) => user.id));
+        const missingIds = data.usersId.filter((id) => !foundIds.has(id));
+
+        if (missingIds.length > 0) {
+            throw new RpcException({
+                statusCode: 400,
+                message: "User(s) not found by ID !",
+                error: "Bad Request",
+            });
+        }
+
+        const createdTask = await this.taskRepository.create({
+            ...data,
+            usersId: Array.from(foundIds),
+        });
+
+        // Publicar evento no BROKER do RabbitMQ !!!!
+
+        return this.taskMapper.toResponse(
+            createdTask,
+            usersById.map((user) => user.id),
+        );
     }
 }
