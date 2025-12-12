@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
-import { RpcException } from "@nestjs/microservices";
 import { CreateTaskDTO } from "@repo/contracts";
 import { ITaskRepository } from "src/repositories/abstracts/task.repository.interface";
 import { IUserRepository } from "src/repositories/abstracts/user.repository.interface";
+import { UserNotFoundByIdException } from "./exceptions/tasks.exceptions";
 import { TaskMapper } from "./mapper/task.mapper";
 import { ITaskResponse } from "./response/task.response";
 
@@ -25,11 +25,7 @@ export class TasksService {
         const missingIds = data.usersId.filter((id) => !foundIds.has(id));
 
         if (missingIds.length > 0) {
-            throw new RpcException({
-                statusCode: 400,
-                message: "User(s) not found by ID !",
-                error: "Bad Request",
-            });
+            throw new UserNotFoundByIdException();
         }
 
         const createdTask = await this.taskRepository.create({
