@@ -13,6 +13,6 @@ export class UserController {
     async register(
         @Payload() payload: RegisterUserDTO,
     ): Promise<IUserResponse> {
-        return this.userService.register(payload);
+        return await this.userService.register(payload);
     }
 }
