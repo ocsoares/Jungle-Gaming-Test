@@ -19,6 +19,10 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@repo/contracts": "workspace:*",
+    "@repo/typeorm": "workspace:*",
+    "@repo/config": "workspace:*",
+    "@repo/user-exceptions": "workspace:*",
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.0.1",
@@ -33,9 +37,9 @@
     "typeorm": "^0.3.28"
   },
   "devDependencies": {
+    "@repo/tsconfig": "workspace:*",
     "@nestjs/cli": "^11.0.0",
     "@nestjs/testing": "^11.0.1",
-    "@repo/tsconfig": "workspace:*",
     "@swc/cli": "^0.7.9",
     "@swc/core": "^1.15.3",
     "@types/jest": "^30.0.0",
