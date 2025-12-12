@@ -16,6 +16,10 @@ export interface IServerConfig {
         host?: string;
         port?: number;
     };
+    task_service: {
+        host?: string;
+        port?: number;
+    };
 }
 
 export default registerAs<IServerConfig>("server", () => {
@@ -36,6 +40,10 @@ export default registerAs<IServerConfig>("server", () => {
         auth_service: {
             host: process.env.AUTH_SERVICE_HOST,
             port: Number(process.env.AUTH_SERVICE_PORT),
+        },
+        task_service: {
+            host: process.env.TASK_SERVICE_HOST,
+            port: Number(process.env.TASK_SERVICE_PORT),
         },
     };
 });
