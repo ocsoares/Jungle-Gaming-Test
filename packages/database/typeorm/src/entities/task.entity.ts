@@ -4,9 +4,11 @@ import {
     Entity,
     JoinTable,
     ManyToMany,
+    OneToMany,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from "typeorm";
+import { CommentEntity } from "./comment.entity";
 import { UserEntity } from "./user.entity";
 
 enum Priority {
@@ -43,17 +45,22 @@ export class TaskEntity {
     @Column({ type: "enum", enum: Status })
     readonly status: Status;
 
-    @CreateDateColumn()
-    readonly createdAt: Date;
-
-    @UpdateDateColumn()
-    readonly updatedAt: Date;
-
     @ManyToMany(() => UserEntity, (user) => user.tasks)
     @JoinTable({
         name: "tasks_users",
         joinColumn: { name: "task_id", referencedColumnName: "id" },
         inverseJoinColumn: { name: "user_id", referencedColumnName: "id" },
     })
-    users: UserEntity[];
+    readonly users: UserEntity[];
+
+    @OneToMany(() => CommentEntity, (comment) => comment.task, {
+        cascade: true,
+    })
+    readonly comments: CommentEntity[];
+
+    @CreateDateColumn()
+    readonly createdAt: Date;
+
+    @UpdateDateColumn()
+    readonly updatedAt: Date;
 }

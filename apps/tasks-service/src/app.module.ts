@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import serverConfig from "@repo/config/server.config";
-import { TaskEntity, UserEntity } from "@repo/typeorm/entities";
+import { CommentEntity, TaskEntity, UserEntity } from "@repo/typeorm/entities";
 import { TypeOrmOwnModule } from "./database/typeormown.module";
 import { ITaskRepository } from "./repositories/abstracts/task.repository.interface";
 import { IUserRepository } from "./repositories/abstracts/user.repository.interface";
@@ -23,7 +23,7 @@ import { TasksService } from "./tasks/tasks.service";
             load: [serverConfig],
         }),
         TypeOrmOwnModule,
-        TypeOrmModule.forFeature([TaskEntity, UserEntity]),
+        TypeOrmModule.forFeature([TaskEntity, UserEntity, CommentEntity]),
     ],
     controllers: [TasksController],
     providers: [
