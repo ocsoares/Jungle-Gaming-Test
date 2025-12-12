@@ -1,4 +1,4 @@
-import { Body, Controller, Inject, Post } from "@nestjs/common";
+import { Body, Controller, Inject, Post, UseGuards } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import {
     TASK_SERVICE_CREATE_MESSAGE,
@@ -6,7 +6,9 @@ import {
 } from "@repo/config/constants";
 import { CreateTaskDTO } from "@repo/contracts";
 import { firstValueFrom } from "rxjs";
+import { AuthGuard } from "src/guards/auth/auth.guard";
 
+@UseGuards(AuthGuard)
 @Controller("tasks")
 export class TasksController {
     constructor(

@@ -1,11 +1,14 @@
 import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
-import { LoginDTO } from "@repo/contracts/auth";
+import {
+    IValidateTokenResponse,
+    JwtPayload,
+    LoginDTO,
+} from "@repo/contracts/auth";
 import * as bcrypt from "bcrypt";
 import { IUserRepository } from "../repositories/abstracts/user.repository.interface";
 import { InvalidUserCredentialsRpcException } from "./exceptions/user/user.exceptions";
 import { ILoginResponse } from "./response/login.response";
-import { JwtPayload } from "./types/jwt-payload.type";
 import { TokenUtils } from "./utils/token.utils";
 
 @Injectable()
@@ -32,6 +35,22 @@ export class AuthService {
             this.jwtService,
             payload,
         );
+    }
+
+    async validateToken(token: string): Promise<IValidateTokenResponse> {
+        try {
+            const decoded = (await this.jwtService.verify(token)) as JwtPayload;
+
+            return {
+                valid: true,
+                token: decoded,
+            };
+        } catch {
+            return {
+                valid: false,
+                token: null,
+            };
+        }
     }
 
     private async validateCredentials(data: LoginDTO): Promise<JwtPayload> {

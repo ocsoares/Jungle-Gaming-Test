@@ -5,3 +5,8 @@ export class JwtPayload {
     readonly iat?: number;
     readonly exp?: number;
 }
+
+export interface IValidateTokenResponse {
+    readonly valid: boolean;
+    readonly token: JwtPayload | null;
+}

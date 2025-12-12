@@ -1,6 +1,6 @@
 import { JwtService } from "@nestjs/jwt";
+import { JwtPayload } from "@repo/contracts";
 import { ILoginResponse } from "../response/login.response";
-import { JwtPayload } from "../types/jwt-payload.type";
 
 export class TokenUtils {
     async generateAccessToken(
