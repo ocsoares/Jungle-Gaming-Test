@@ -4,6 +4,7 @@ import {
     Entity,
     ManyToOne,
     PrimaryGeneratedColumn,
+    UpdateDateColumn,
 } from "typeorm";
 import { TaskEntity } from "./task.entity";
 import { UserEntity } from "./user.entity";
@@ -26,4 +27,7 @@ export class CommentEntity {
 
     @CreateDateColumn()
     readonly createdAt: Date;
+
+    @UpdateDateColumn()
+    readonly updatedAt: Date;
 }
