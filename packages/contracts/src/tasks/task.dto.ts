@@ -1,4 +1,4 @@
-import { PartialType } from "@nestjs/mapped-types";
+import { OmitType, PartialType } from "@nestjs/mapped-types";
 import { Type } from "class-transformer";
 import {
     IsDateString,
@@ -62,7 +62,9 @@ export class GetAllTasksDTO {
     readonly size: number;
 }
 
-export class UpdateTaskDTO extends PartialType(CreateTaskDTO) {}
+export class UpdateTaskDTO extends PartialType(
+    OmitType(CreateTaskDTO, ["usersId"]),
+) {}
 
 export class UpdateTaskMessage {
     readonly id: string;

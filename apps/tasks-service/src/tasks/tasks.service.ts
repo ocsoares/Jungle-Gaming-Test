@@ -68,17 +68,6 @@ export class TasksService {
             throw new TaskNotFoundByIdException();
         }
 
-        if (data.usersId) {
-            const usersById = await this.userRepository.findByIds(data.usersId);
-
-            const foundIds = new Set(usersById.map((user) => user.id));
-            const missingIds = data.usersId.filter((id) => !foundIds.has(id));
-
-            if (missingIds.length > 0) {
-                throw new UserNotFoundByIdException();
-            }
-        }
-
         const updatedTask = await this.taskRepository.updateById(
             taskById,
             data,
