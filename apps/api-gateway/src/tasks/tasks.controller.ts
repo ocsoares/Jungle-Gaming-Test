@@ -14,6 +14,7 @@ import {
     TASK_SERVICE_CREATE_COMMENT_MESSAGE,
     TASK_SERVICE_CREATE_MESSAGE,
     TASK_SERVICE_GET_ALL_MESSAGE,
+    TASK_SERVICE_GET_BY_ID_MESSAGE,
     TASK_SERVICE_NAME,
 } from "@repo/config/constants";
 import {
@@ -55,6 +56,15 @@ export class TasksController {
     async getAll(@Query() query: GetAllTasksDTO): Promise<any> {
         return await firstValueFrom(
             this.clientProxy.send(TASK_SERVICE_GET_ALL_MESSAGE, query),
+        );
+    }
+
+    @Get(":id")
+    async getById(
+        @Param("id", new ParseUUIDPipe({ version: "4" })) payload: string,
+    ): Promise<any> {
+        return await firstValueFrom(
+            this.clientProxy.send(TASK_SERVICE_GET_BY_ID_MESSAGE, payload),
         );
     }
 }

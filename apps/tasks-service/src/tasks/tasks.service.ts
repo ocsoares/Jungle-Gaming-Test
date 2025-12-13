@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { CreateTaskDTO, GetAllTasksDTO } from "@repo/contracts";
+import { TaskNotFoundByIdException } from "src/comments/exceptions/comments.exceptionts";
 import { ITaskRepository } from "src/repositories/abstracts/task.repository.interface";
 import { IUserRepository } from "src/repositories/abstracts/user.repository.interface";
 import { UserNotFoundByIdException } from "./exceptions/tasks.exceptions";
@@ -48,5 +49,15 @@ export class TasksService {
             { page, size },
             total,
         );
+    }
+
+    async getById(id: string): Promise<ITaskResponse> {
+        const taskById = await this.taskRepository.findById(id);
+
+        if (!taskById) {
+            throw new TaskNotFoundByIdException();
+        }
+
+        return this.taskMapper.toResponse(taskById);
     }
 }
