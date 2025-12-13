@@ -1,3 +1,4 @@
+import { PartialType } from "@nestjs/mapped-types";
 import { Type } from "class-transformer";
 import {
     IsDateString,
@@ -59,4 +60,11 @@ export class GetAllTasksDTO {
     @IsNumber()
     @Type(() => Number)
     readonly size: number;
+}
+
+export class UpdateTaskDTO extends PartialType(CreateTaskDTO) {}
+
+export class UpdateTaskMessage {
+    readonly id: string;
+    readonly data: UpdateTaskDTO;
 }

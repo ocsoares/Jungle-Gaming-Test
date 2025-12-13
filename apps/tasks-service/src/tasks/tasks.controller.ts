@@ -4,8 +4,13 @@ import {
     TASK_SERVICE_CREATE_MESSAGE,
     TASK_SERVICE_GET_ALL_MESSAGE,
     TASK_SERVICE_GET_BY_ID_MESSAGE,
+    TASK_SERVICE_UPDATE_BY_ID_MESSAGE,
 } from "@repo/config";
-import { CreateTaskDTO, GetAllTasksDTO } from "@repo/contracts";
+import {
+    CreateTaskDTO,
+    GetAllTasksDTO,
+    UpdateTaskMessage,
+} from "@repo/contracts";
 import { ITaskGetAllResponse, ITaskResponse } from "./response/task.response";
 import { TasksService } from "./tasks.service";
 
@@ -28,5 +33,12 @@ export class TasksController {
     @MessagePattern(TASK_SERVICE_GET_BY_ID_MESSAGE)
     async getById(@Payload() payload: string): Promise<ITaskResponse> {
         return await this.tasksService.getById(payload);
+    }
+
+    @MessagePattern(TASK_SERVICE_UPDATE_BY_ID_MESSAGE)
+    async updateById(
+        @Payload() payload: UpdateTaskMessage,
+    ): Promise<ITaskResponse> {
+        return this.tasksService.updateById(payload.id, payload.data);
     }
 }

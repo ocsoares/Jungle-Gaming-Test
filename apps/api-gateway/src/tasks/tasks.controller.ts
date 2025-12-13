@@ -6,6 +6,7 @@ import {
     Param,
     ParseUUIDPipe,
     Post,
+    Put,
     Query,
     UseGuards,
 } from "@nestjs/common";
@@ -16,11 +17,14 @@ import {
     TASK_SERVICE_GET_ALL_MESSAGE,
     TASK_SERVICE_GET_BY_ID_MESSAGE,
     TASK_SERVICE_NAME,
+    TASK_SERVICE_UPDATE_BY_ID_MESSAGE,
 } from "@repo/config/constants";
 import {
     CreateCommentDTO,
     CreateTaskDTO,
     GetAllTasksDTO,
+    UpdateTaskDTO,
+    UpdateTaskMessage,
 } from "@repo/contracts";
 import { firstValueFrom } from "rxjs";
 import { AuthGuard } from "src/guards/auth/auth.guard";
@@ -65,6 +69,22 @@ export class TasksController {
     ): Promise<any> {
         return await firstValueFrom(
             this.clientProxy.send(TASK_SERVICE_GET_BY_ID_MESSAGE, payload),
+        );
+    }
+
+    @Put(":id")
+    async updateById(
+        @Param("id", new ParseUUIDPipe({ version: "4" }))
+        taskId: string,
+        @Body() body: UpdateTaskDTO,
+    ): Promise<any> {
+        const payload: UpdateTaskMessage = {
+            id: taskId,
+            data: body,
+        };
+
+        return await firstValueFrom(
+            this.clientProxy.send(TASK_SERVICE_UPDATE_BY_ID_MESSAGE, payload),
         );
     }
 }

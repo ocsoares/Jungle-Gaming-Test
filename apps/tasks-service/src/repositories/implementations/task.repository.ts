@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { CreateTaskDTO, GetAllTasksDTO } from "@repo/contracts";
+import { CreateTaskDTO, GetAllTasksDTO, UpdateTaskDTO } from "@repo/contracts";
 import { TaskEntity } from "@repo/typeorm/entities";
 import { Repository } from "typeorm";
 import { ITaskRepository } from "../abstracts/task.repository.interface";
@@ -34,5 +34,14 @@ export class TaskRepository implements ITaskRepository {
             take: size,
             order: { createdAt: "DESC" },
         });
+    }
+
+    async updateById(
+        entity: TaskEntity,
+        updateData: UpdateTaskDTO,
+    ): Promise<TaskEntity> {
+        Object.assign(entity, updateData);
+
+        return await this.taskRepository.save(entity);
     }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { CreateTaskDTO, GetAllTasksDTO } from "@repo/contracts";
+import { CreateTaskDTO, GetAllTasksDTO, UpdateTaskDTO } from "@repo/contracts";
 import { TaskNotFoundByIdException } from "src/comments/exceptions/comments.exceptionts";
 import { ITaskRepository } from "src/repositories/abstracts/task.repository.interface";
 import { IUserRepository } from "src/repositories/abstracts/user.repository.interface";
@@ -59,5 +59,31 @@ export class TasksService {
         }
 
         return this.taskMapper.toResponse(taskById);
+    }
+
+    async updateById(id: string, data: UpdateTaskDTO): Promise<ITaskResponse> {
+        const taskById = await this.taskRepository.findById(id);
+
+        if (!taskById) {
+            throw new TaskNotFoundByIdException();
+        }
+
+        if (data.usersId) {
+            const usersById = await this.userRepository.findByIds(data.usersId);
+
+            const foundIds = new Set(usersById.map((user) => user.id));
+            const missingIds = data.usersId.filter((id) => !foundIds.has(id));
+
+            if (missingIds.length > 0) {
+                throw new UserNotFoundByIdException();
+            }
+        }
+
+        const updatedTask = await this.taskRepository.updateById(
+            taskById,
+            data,
+        );
+
+        return this.taskMapper.toResponse(updatedTask);
     }
 }
