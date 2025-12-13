@@ -18,5 +18,12 @@ export interface ITaskResponse {
     readonly due_date: string;
     readonly priority: Priority;
     readonly status: Status;
-    readonly usersId: string[];
+}
+
+export interface ITaskGetAllResponse {
+    readonly data: ITaskResponse[];
+    readonly total: number;
+    readonly page: number;
+    readonly size: number;
+    readonly totalPages: number;
 }

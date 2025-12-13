@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
-import { CreateTaskDTO } from "@repo/contracts";
+import { CreateTaskDTO, GetAllTasksDTO } from "@repo/contracts";
 import { ITaskRepository } from "src/repositories/abstracts/task.repository.interface";
 import { IUserRepository } from "src/repositories/abstracts/user.repository.interface";
 import { UserNotFoundByIdException } from "./exceptions/tasks.exceptions";
 import { TaskMapper } from "./mapper/task.mapper";
-import { ITaskResponse } from "./response/task.response";
+import { ITaskGetAllResponse, ITaskResponse } from "./response/task.response";
 
 // TODO
 // Terminar o CRUD dessas TASKS (e PROTEGER as Rotas)
@@ -34,9 +34,19 @@ export class TasksService {
 
         // Publicar evento no BROKER do RabbitMQ !!!!
 
-        return this.taskMapper.toResponse(
-            createdTask,
-            usersById.map((user) => user.id),
+        return this.taskMapper.toResponse(createdTask);
+    }
+
+    async getAll({ page, size }: GetAllTasksDTO): Promise<ITaskGetAllResponse> {
+        const [tasksEntityArray, total] = await this.taskRepository.getAll({
+            page,
+            size,
+        });
+
+        return this.taskMapper.toResponseGetAll(
+            tasksEntityArray,
+            { page, size },
+            total,
         );
     }
 }

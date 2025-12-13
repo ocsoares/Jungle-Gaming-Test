@@ -1,7 +1,9 @@
+import { Type } from "class-transformer";
 import {
     IsDateString,
     IsEnum,
     IsNotEmpty,
+    IsNumber,
     IsString,
     IsUUID,
 } from "class-validator";
@@ -45,4 +47,16 @@ export class CreateTaskDTO {
     @IsString({ each: true })
     @IsUUID("4", { each: true })
     readonly usersId: string[];
+}
+
+export class GetAllTasksDTO {
+    @IsNotEmpty()
+    @IsNumber()
+    @Type(() => Number)
+    readonly page: number;
+
+    @IsNotEmpty()
+    @IsNumber()
+    @Type(() => Number)
+    readonly size: number;
 }

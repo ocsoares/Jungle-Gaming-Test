@@ -1,19 +1,26 @@
 import {
     Body,
     Controller,
+    Get,
     Inject,
     Param,
     ParseUUIDPipe,
     Post,
+    Query,
     UseGuards,
 } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import {
     TASK_SERVICE_CREATE_COMMENT_MESSAGE,
     TASK_SERVICE_CREATE_MESSAGE,
+    TASK_SERVICE_GET_ALL_MESSAGE,
     TASK_SERVICE_NAME,
 } from "@repo/config/constants";
-import { CreateCommentDTO, CreateTaskDTO } from "@repo/contracts";
+import {
+    CreateCommentDTO,
+    CreateTaskDTO,
+    GetAllTasksDTO,
+} from "@repo/contracts";
 import { firstValueFrom } from "rxjs";
 import { AuthGuard } from "src/guards/auth/auth.guard";
 
@@ -41,6 +48,13 @@ export class TasksController {
 
         return await firstValueFrom(
             this.clientProxy.send(TASK_SERVICE_CREATE_COMMENT_MESSAGE, payload),
+        );
+    }
+
+    @Get()
+    async getAll(@Query() query: GetAllTasksDTO): Promise<any> {
+        return await firstValueFrom(
+            this.clientProxy.send(TASK_SERVICE_GET_ALL_MESSAGE, query),
         );
     }
 }
