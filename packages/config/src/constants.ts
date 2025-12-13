@@ -5,3 +5,4 @@ export const AUTH_SERVICE_REGISTER_MESSAGE = "auth-register";
 export const AUTH_SERVICE_VALIDATE_TOKEN_MESSAGE = "auth-validate-token";
 export const TASK_SERVICE_NAME = "TASK-SERVICE";
 export const TASK_SERVICE_CREATE_MESSAGE = "task-create";
+export const TASK_SERVICE_CREATE_COMMENT_MESSAGE = "task-create-comment";

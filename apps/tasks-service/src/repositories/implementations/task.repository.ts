@@ -20,4 +20,8 @@ export class TaskRepository implements ITaskRepository {
 
         return await this.taskRepository.save(taskCreated);
     }
+
+    async findById(id: string): Promise<TaskEntity | null> {
+        return await this.taskRepository.findOneBy({ id });
+    }
 }
