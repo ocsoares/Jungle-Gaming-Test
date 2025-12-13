@@ -7,8 +7,6 @@ import { TaskMapper } from "./mapper/task.mapper";
 import { ITaskResponse } from "./response/task.response";
 
 // TODO
-// - Comentários: criar e listar em cada tarefa. <-- isso tem q ser uma Entity pra salvar no Banco ???
-// - Histórico de alterações (audit log simplificado).
 // Terminar o CRUD dessas TASKS (e PROTEGER as Rotas)
 
 @Injectable()

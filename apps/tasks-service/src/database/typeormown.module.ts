@@ -2,7 +2,13 @@ import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { IServerConfig } from "@repo/config/server.config";
-import { CommentEntity, TaskEntity, UserEntity } from "@repo/typeorm/entities";
+import {
+    CommentEntity,
+    TaskEntity,
+    TaskHistoryEntity,
+    UserEntity,
+} from "@repo/typeorm/entities";
+import { TaskSubscriber } from "src/subscribers/task.subscriber";
 
 @Module({
     imports: [
@@ -20,7 +26,13 @@ import { CommentEntity, TaskEntity, UserEntity } from "@repo/typeorm/entities";
                     username: pg!.username,
                     password: pg!.password,
                     database: pg!.database,
-                    entities: [UserEntity, TaskEntity, CommentEntity],
+                    entities: [
+                        UserEntity,
+                        TaskEntity,
+                        CommentEntity,
+                        TaskHistoryEntity,
+                    ],
+                    subscribers: [TaskSubscriber],
                 };
             },
         }),
