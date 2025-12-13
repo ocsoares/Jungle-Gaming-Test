@@ -2,6 +2,7 @@ import { Controller } from "@nestjs/common";
 import { MessagePattern, Payload } from "@nestjs/microservices";
 import {
     TASK_SERVICE_CREATE_MESSAGE,
+    TASK_SERVICE_DELETE_BY_ID_MESSAGE,
     TASK_SERVICE_GET_ALL_MESSAGE,
     TASK_SERVICE_GET_BY_ID_MESSAGE,
     TASK_SERVICE_UPDATE_BY_ID_MESSAGE,
@@ -40,5 +41,12 @@ export class TasksController {
         @Payload() payload: UpdateTaskMessage,
     ): Promise<ITaskResponse> {
         return this.tasksService.updateById(payload.id, payload.data);
+    }
+
+    @MessagePattern(TASK_SERVICE_DELETE_BY_ID_MESSAGE)
+    async deleteById(@Payload() payload: string): Promise<true> {
+        await this.tasksService.deleteById(payload);
+
+        return true;
     }
 }

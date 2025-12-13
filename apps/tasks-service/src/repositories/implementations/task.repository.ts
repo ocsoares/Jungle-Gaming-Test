@@ -44,4 +44,8 @@ export class TaskRepository implements ITaskRepository {
 
         return await this.taskRepository.save(entity);
     }
+
+    async deleteById(entity: TaskEntity): Promise<void> {
+        await this.taskRepository.remove(entity);
+    }
 }

@@ -75,4 +75,14 @@ export class TasksService {
 
         return this.taskMapper.toResponse(updatedTask);
     }
+
+    async deleteById(id: string): Promise<void> {
+        const taskById = await this.taskRepository.findById(id);
+
+        if (!taskById) {
+            throw new TaskNotFoundByIdException();
+        }
+
+        return await this.taskRepository.deleteById(taskById);
+    }
 }

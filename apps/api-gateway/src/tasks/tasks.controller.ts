@@ -1,7 +1,9 @@
 import {
     Body,
     Controller,
+    Delete,
     Get,
+    HttpCode,
     Inject,
     Param,
     ParseUUIDPipe,
@@ -14,6 +16,7 @@ import { ClientProxy } from "@nestjs/microservices";
 import {
     TASK_SERVICE_CREATE_COMMENT_MESSAGE,
     TASK_SERVICE_CREATE_MESSAGE,
+    TASK_SERVICE_DELETE_BY_ID_MESSAGE,
     TASK_SERVICE_GET_ALL_MESSAGE,
     TASK_SERVICE_GET_BY_ID_MESSAGE,
     TASK_SERVICE_NAME,
@@ -85,6 +88,17 @@ export class TasksController {
 
         return await firstValueFrom(
             this.clientProxy.send(TASK_SERVICE_UPDATE_BY_ID_MESSAGE, payload),
+        );
+    }
+
+    @Delete(":id")
+    @HttpCode(204)
+    async deleteById(
+        @Param("id", new ParseUUIDPipe({ version: "4" }))
+        payload: string,
+    ): Promise<void> {
+        await firstValueFrom(
+            this.clientProxy.send(TASK_SERVICE_DELETE_BY_ID_MESSAGE, payload),
         );
     }
 }

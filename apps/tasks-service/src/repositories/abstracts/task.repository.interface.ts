@@ -9,4 +9,5 @@ export abstract class ITaskRepository {
         entity: TaskEntity,
         updateData: UpdateTaskDTO,
     ): Promise<TaskEntity>;
+    abstract deleteById(entity: TaskEntity): Promise<void>;
 }
