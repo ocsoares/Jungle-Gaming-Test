@@ -1,4 +1,9 @@
-import { Injectable } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
+import { ClientProxy } from "@nestjs/microservices";
+import {
+    NOTIFICATION_SERVICE_COMMENT_CREATED_MESSAGE,
+    NOTIFICATION_SERVICE_NAME,
+} from "@repo/config";
 import { CreateCommentDTO, GetAllCommentsDTO } from "@repo/contracts";
 import { ICommentRepository } from "src/repositories/abstracts/comment.repository.interface";
 import { ITaskRepository } from "src/repositories/abstracts/task.repository.interface";
@@ -16,6 +21,8 @@ import {
 @Injectable()
 export class CommentsService {
     constructor(
+        @Inject(NOTIFICATION_SERVICE_NAME)
+        private readonly clientProxy: ClientProxy,
         private readonly commentRepository: ICommentRepository,
         private readonly userRepository: IUserRepository,
         private readonly taskRepository: ITaskRepository,
@@ -37,8 +44,10 @@ export class CommentsService {
 
         const commentCreated = await this.commentRepository.create(data);
 
-        // TODO
-        // publica `task.comment.created`
+        this.clientProxy.emit(
+            NOTIFICATION_SERVICE_COMMENT_CREATED_MESSAGE,
+            commentCreated.id,
+        );
 
         return this.commentMapper.toResponse(
             commentCreated,

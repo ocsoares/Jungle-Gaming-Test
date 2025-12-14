@@ -1,6 +1,8 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
+import { ClientsModule, Transport } from "@nestjs/microservices";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { NOTIFICATION_SERVICE_NAME } from "@repo/config";
 import serverConfig from "@repo/config/server.config";
 import { CommentEntity, TaskEntity, UserEntity } from "@repo/typeorm/entities";
 import { CommentsController } from "./comments/comments.controller";
@@ -27,6 +29,19 @@ import { TasksService } from "./tasks/tasks.service";
             ],
             load: [serverConfig],
         }),
+        ClientsModule.register([
+            {
+                name: NOTIFICATION_SERVICE_NAME,
+                transport: Transport.RMQ,
+                options: {
+                    urls: [
+                        `amqp://${process.env.RABBITMQ_DEFAULT_USER}:${process.env.RABBITMQ_DEFAULT_PASS}@${process.env.RABBITMQ_HOST}:5672`,
+                    ],
+                    queue: process.env.RABBITMQ_QUEUE,
+                    queueOptions: { durable: true },
+                },
+            },
+        ]),
         TypeOrmOwnModule,
         TypeOrmModule.forFeature([TaskEntity, UserEntity, CommentEntity]),
     ],
