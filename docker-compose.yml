@@ -26,7 +26,7 @@ services:
     ports:
       - '3001:3001'
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:3001/api/health/readiness" ]
+      test: [ "CMD-SHELL", "curl -f ${API_GATEWAY_HOST}:${API_GATEWAY_PORT}/api/health/readiness || exit 1" ]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -35,6 +35,9 @@ services:
       - ./packages:/app/packages
       - /app/node_modules
       - /app/apps/api-gateway/node_modules
+    env_file:
+      - ./.env
+      - ./apps/api-gateway/.env
     environment:
       - NODE_ENV=development
       - PORT=3001
