@@ -1,6 +1,8 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
+import { APP_GUARD } from "@nestjs/core";
 import { ClientsModule, Transport } from "@nestjs/microservices";
+import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
 import { AUTH_SERVICE_NAME, TASK_SERVICE_NAME } from "@repo/config/constants";
 import serverConfig from "@repo/config/server.config";
 import { AuthController } from "./auth/auth.controller";
@@ -15,6 +17,14 @@ import { TasksController } from "./tasks/tasks.controller";
                 "../../.env", // env raiz
             ],
             load: [serverConfig],
+        }),
+        ThrottlerModule.forRoot({
+            throttlers: [
+                {
+                    ttl: Number(process.env.GATEWAY_TTL) || 1000,
+                    limit: Number(process.env.GATEWAY_LIMIT) || 10,
+                },
+            ],
         }),
         ClientsModule.register([
             {
@@ -36,6 +46,11 @@ import { TasksController } from "./tasks/tasks.controller";
         ]),
     ],
     controllers: [AuthController, TasksController],
-    providers: [],
+    providers: [
+        {
+            provide: APP_GUARD,
+            useClass: ThrottlerGuard,
+        },
+    ],
 })
 export class AppModule {}
