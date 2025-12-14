@@ -2,10 +2,12 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { APP_GUARD } from "@nestjs/core";
 import { ClientsModule, Transport } from "@nestjs/microservices";
+import { TerminusModule } from "@nestjs/terminus";
 import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
 import { AUTH_SERVICE_NAME, TASK_SERVICE_NAME } from "@repo/config/constants";
 import serverConfig from "@repo/config/server.config";
 import { AuthController } from "./auth/auth.controller";
+import { HealthController } from "./health/health.controller";
 import { TasksController } from "./tasks/tasks.controller";
 
 @Module({
@@ -26,6 +28,7 @@ import { TasksController } from "./tasks/tasks.controller";
                 },
             ],
         }),
+        TerminusModule,
         ClientsModule.register([
             {
                 name: AUTH_SERVICE_NAME,
@@ -45,7 +48,7 @@ import { TasksController } from "./tasks/tasks.controller";
             },
         ]),
     ],
-    controllers: [AuthController, TasksController],
+    controllers: [AuthController, TasksController, HealthController],
     providers: [
         {
             provide: APP_GUARD,

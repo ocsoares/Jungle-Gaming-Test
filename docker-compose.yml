@@ -25,6 +25,11 @@ services:
       target: development
     ports:
       - '3001:3001'
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:3001/api/health/readiness" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     volumes:
       - .:/app
       - ./packages:/app/packages
@@ -147,7 +152,7 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
       RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
-    volumes: ['rabbitmq_data:/var/lib/rabbitmq']
+    volumes: [ 'rabbitmq_data:/var/lib/rabbitmq' ]
 
 volumes:
   postgres_data:

@@ -1,16 +1,19 @@
 import { Controller } from "@nestjs/common";
 import { MessagePattern, Payload } from "@nestjs/microservices";
 import {
-  NOTIFICATION_SERVICE_COMMENT_CREATED_MESSAGE,
-  NOTIFICATION_SERVICE_TASK_CREATED_MESSAGE,
-  NOTIFICATION_SERVICE_TASK_UPDATED_MESSAGE,
+    NOTIFICATION_SERVICE_COMMENT_CREATED_MESSAGE,
+    NOTIFICATION_SERVICE_TASK_CREATED_MESSAGE,
+    NOTIFICATION_SERVICE_TASK_UPDATED_MESSAGE,
 } from "@repo/config";
 import { AppService } from "./app.service";
 
 // TODO
+// - health checks
 // - Swagger completo no Gateway (/api/docs)
 // - Dockerfile de TODOS
 // - Ver oq fazer aqui nesse Websocket...
+// - Subir o docker-compose...
+// - README detalhado...
 
 @Controller()
 export class AppController {
