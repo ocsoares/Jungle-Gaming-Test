@@ -17,6 +17,7 @@ import {
     TASK_SERVICE_CREATE_COMMENT_MESSAGE,
     TASK_SERVICE_CREATE_MESSAGE,
     TASK_SERVICE_DELETE_BY_ID_MESSAGE,
+    TASK_SERVICE_GET_ALL_COMMENT_MESSAGE,
     TASK_SERVICE_GET_ALL_MESSAGE,
     TASK_SERVICE_GET_BY_ID_MESSAGE,
     TASK_SERVICE_NAME,
@@ -25,6 +26,7 @@ import {
 import {
     CreateCommentDTO,
     CreateTaskDTO,
+    GetAllCommentsDTO,
     GetAllTasksDTO,
     UpdateTaskDTO,
     UpdateTaskMessage,
@@ -56,6 +58,26 @@ export class TasksController {
 
         return await firstValueFrom(
             this.clientProxy.send(TASK_SERVICE_CREATE_COMMENT_MESSAGE, payload),
+        );
+    }
+
+    @Get(":id/comments")
+    async getAllComments(
+        @Param("id", new ParseUUIDPipe({ version: "4" }))
+        taskId: string,
+        @Query() query: GetAllCommentsDTO,
+    ): Promise<any> {
+        const payload: GetAllCommentsDTO = {
+            taskId: taskId,
+            page: query.page,
+            size: query.size,
+        };
+
+        return await firstValueFrom(
+            this.clientProxy.send(
+                TASK_SERVICE_GET_ALL_COMMENT_MESSAGE,
+                payload,
+            ),
         );
     }
 

@@ -7,6 +7,7 @@ export const AUTH_SERVICE_VALIDATE_TOKEN_MESSAGE = "auth-validate-token";
 export const TASK_SERVICE_NAME = "TASK-SERVICE";
 export const TASK_SERVICE_CREATE_MESSAGE = "task-create";
 export const TASK_SERVICE_CREATE_COMMENT_MESSAGE = "task-create-comment";
+export const TASK_SERVICE_GET_ALL_COMMENT_MESSAGE = "task-get-all-comment";
 export const TASK_SERVICE_GET_ALL_MESSAGE = "task-get-all";
 export const TASK_SERVICE_GET_BY_ID_MESSAGE = "task-get-by-id";
 export const TASK_SERVICE_UPDATE_BY_ID_MESSAGE = "task-update-by-id";

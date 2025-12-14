@@ -1,5 +1,5 @@
 import { InjectRepository } from "@nestjs/typeorm";
-import { CreateCommentDTO } from "@repo/contracts";
+import { CreateCommentDTO, GetAllCommentsDTO } from "@repo/contracts";
 import { CommentEntity } from "@repo/typeorm/entities";
 import { Repository } from "typeorm";
 import { ICommentRepository } from "../abstracts/comment.repository.interface";
@@ -18,5 +18,18 @@ export class CommentRepository implements ICommentRepository {
         });
 
         return this.commentRepository.save(commentCreated);
+    }
+
+    async getAll({
+        taskId,
+        page,
+        size,
+    }: GetAllCommentsDTO): Promise<[CommentEntity[], number]> {
+        return await this.commentRepository.findAndCount({
+            where: { task: { id: taskId } },
+            skip: (page - 1) * size,
+            take: size,
+            order: { createdAt: "DESC" },
+        });
     }
 }
