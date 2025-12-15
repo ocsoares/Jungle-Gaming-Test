@@ -8,11 +8,8 @@ import {
 import { AppService } from "./app.service";
 
 // TODO
-// - health checks
 // - Swagger completo no Gateway (/api/docs)
-// - Dockerfile de TODOS
 // - Ver oq fazer aqui nesse Websocket...
-// - Subir o docker-compose...
 // - README detalhado...
 
 @Controller()
@@ -21,6 +18,8 @@ export class AppController {
 
     @MessagePattern(NOTIFICATION_SERVICE_TASK_CREATED_MESSAGE)
     async handleTaskCreated(@Payload() payload: string): Promise<any> {
+        this.appService.getHello(); // TIRAR isso <<<
+
         console.log("payload no handleTaskCreated:---------", payload);
     }
 

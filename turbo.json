@@ -6,6 +6,10 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     },
+    "postbuild": {
+      "dependsOn": ["build"],
+      "cache": false
+    },
     "start": {
       "dependsOn": ["^build"],
       "persistent": false,
@@ -13,7 +17,8 @@
     },
     "start:dev": {
       "dependsOn": ["^build"],
-      "persistent": true
+      "persistent": true,
+      "cache": false
     },
     "lint": {
       "dependsOn": ["^build"]

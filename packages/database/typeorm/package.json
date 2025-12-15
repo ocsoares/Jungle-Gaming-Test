@@ -7,7 +7,7 @@
   "scripts": {
     "clean": "rimraf dist tsconfig.tsbuildinfo",
     "build": "pnpm run clean && tsc -p tsconfig.json",
-    "build:force": "pnpm run clean && tsc -p tsconfig.json --force"
+    "migration:run": "ts-node -r tsconfig-paths/register src/datasource.ts migration:run"
   },
   "dependencies": {
     "dotenv": "^17.2.3",
@@ -15,6 +15,8 @@
     "typeorm": "^0.3.28"
   },
   "devDependencies": {
-    "rimraf": "^6.1.2"
+    "rimraf": "^6.1.2",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0"
   }
 }

@@ -21,6 +21,7 @@ import { CommentEntity, TaskEntity, UserEntity } from "@repo/typeorm/entities";
                     password: pg!.password,
                     database: pg!.database,
                     entities: [UserEntity, TaskEntity, CommentEntity],
+                    synchronize: true, // in DEVELOPMENT
                 };
             },
         }),

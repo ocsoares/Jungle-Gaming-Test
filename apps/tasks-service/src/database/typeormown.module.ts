@@ -33,6 +33,7 @@ import { TaskSubscriber } from "src/subscribers/task.subscriber";
                         TaskHistoryEntity,
                     ],
                     subscribers: [TaskSubscriber],
+                    synchronize: true, // in DEVELOPMENT
                 };
             },
         }),
