@@ -1,6 +1,12 @@
 import { Body, Controller, HttpCode, Inject, Post } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import {
+    ApiBadRequestResponse,
+    ApiCreatedResponse,
+    ApiInternalServerErrorResponse,
+    ApiUnauthorizedResponse,
+} from "@nestjs/swagger";
+import {
     AUTH_SERVICE_LOGIN_MESSAGE,
     AUTH_SERVICE_NAME,
     AUTH_SERVICE_REFRESH_LOGIN_MESSAGE,
@@ -9,6 +15,9 @@ import {
 import { LoginDTO, RegisterUserDTO } from "@repo/contracts/auth/index";
 import { firstValueFrom } from "rxjs";
 
+@ApiBadRequestResponse()
+@ApiUnauthorizedResponse()
+@ApiInternalServerErrorResponse()
 @Controller("auth")
 export class AuthController {
     constructor(
@@ -31,6 +40,7 @@ export class AuthController {
         );
     }
 
+    @ApiCreatedResponse()
     @Post("register")
     async register(@Body() body: RegisterUserDTO): Promise<any> {
         return await firstValueFrom(

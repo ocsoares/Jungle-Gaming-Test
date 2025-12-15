@@ -14,6 +14,12 @@ import {
 } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import {
+    ApiBadRequestResponse,
+    ApiBearerAuth,
+    ApiInternalServerErrorResponse,
+    ApiUnauthorizedResponse,
+} from "@nestjs/swagger";
+import {
     TASK_SERVICE_CREATE_COMMENT_MESSAGE,
     TASK_SERVICE_CREATE_MESSAGE,
     TASK_SERVICE_DELETE_BY_ID_MESSAGE,
@@ -28,12 +34,16 @@ import {
     CreateTaskDTO,
     GetAllCommentsDTO,
     GetAllTasksDTO,
-    UpdateTaskDTO,
     UpdateTaskMessage,
 } from "@repo/contracts";
 import { firstValueFrom } from "rxjs";
 import { AuthGuard } from "src/guards/auth/auth.guard";
+import { UpdateTaskGatewayDTO } from "./dtos/task.dto";
 
+@ApiBearerAuth()
+@ApiBadRequestResponse()
+@ApiUnauthorizedResponse()
+@ApiInternalServerErrorResponse()
 @UseGuards(AuthGuard)
 @Controller("tasks")
 export class TasksController {
@@ -48,9 +58,9 @@ export class TasksController {
         );
     }
 
-    @Post(":id/comments")
+    @Post(":taskId/comments")
     async createComment(
-        @Param("id", new ParseUUIDPipe({ version: "4" }))
+        @Param("taskId", new ParseUUIDPipe({ version: "4" }))
         taskId: string,
         @Body() body: CreateCommentDTO,
     ): Promise<any> {
@@ -61,9 +71,9 @@ export class TasksController {
         );
     }
 
-    @Get(":id/comments")
+    @Get(":taskId/comments")
     async getAllComments(
-        @Param("id", new ParseUUIDPipe({ version: "4" }))
+        @Param("taskId", new ParseUUIDPipe({ version: "4" }))
         taskId: string,
         @Query() query: GetAllCommentsDTO,
     ): Promise<any> {
@@ -88,20 +98,20 @@ export class TasksController {
         );
     }
 
-    @Get(":id")
+    @Get(":taskId")
     async getById(
-        @Param("id", new ParseUUIDPipe({ version: "4" })) payload: string,
+        @Param("taskId", new ParseUUIDPipe({ version: "4" })) payload: string,
     ): Promise<any> {
         return await firstValueFrom(
             this.clientProxy.send(TASK_SERVICE_GET_BY_ID_MESSAGE, payload),
         );
     }
 
-    @Put(":id")
+    @Put(":taskId")
     async updateById(
-        @Param("id", new ParseUUIDPipe({ version: "4" }))
+        @Param("taskId", new ParseUUIDPipe({ version: "4" }))
         taskId: string,
-        @Body() body: UpdateTaskDTO,
+        @Body() body: UpdateTaskGatewayDTO, // bug typescript
     ): Promise<any> {
         const payload: UpdateTaskMessage = {
             id: taskId,
@@ -113,10 +123,10 @@ export class TasksController {
         );
     }
 
-    @Delete(":id")
+    @Delete(":taskId")
     @HttpCode(204)
     async deleteById(
-        @Param("id", new ParseUUIDPipe({ version: "4" }))
+        @Param("taskId", new ParseUUIDPipe({ version: "4" }))
         payload: string,
     ): Promise<void> {
         await firstValueFrom(

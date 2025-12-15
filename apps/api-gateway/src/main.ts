@@ -1,5 +1,6 @@
 import { Logger, ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { AppModule } from "./app.module";
 import { RpcToHttpExceptionFilter } from "./filters/rcp-to-http-exception.filter";
 
@@ -18,6 +19,18 @@ async function bootstrap() {
             forbidNonWhitelisted: true,
         }),
     );
+
+    const config = new DocumentBuilder()
+        .setTitle("Jungle-Gaming-Test")
+        .setVersion("1.0")
+        .addBearerAuth()
+        .build();
+
+    const document = SwaggerModule.createDocument(app, config);
+
+    SwaggerModule.setup("docs", app, document, {
+        useGlobalPrefix: true,
+    });
 
     await app.listen(Number(process.env.API_GATEWAY_PORT));
 

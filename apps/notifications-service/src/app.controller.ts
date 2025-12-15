@@ -8,7 +8,6 @@ import {
 import { AppService } from "./app.service";
 
 // TODO
-// - Swagger completo no Gateway (/api/docs)
 // - Ver oq fazer aqui nesse Websocket...
 // - README detalhado...
 
