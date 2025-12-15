@@ -1,11 +1,18 @@
 import { Type } from "class-transformer";
-import { IsNotEmpty, IsNumber, IsString, IsUUID } from "class-validator";
+import {
+    IsNotEmpty,
+    IsNumber,
+    IsOptional,
+    IsString,
+    IsUUID,
+} from "class-validator";
 
 export class CreateCommentDTO {
     @IsNotEmpty()
     @IsString()
     readonly content: string;
 
+    @IsOptional() // to Gateway DTO
     readonly taskId: string;
 
     @IsNotEmpty()
@@ -14,6 +21,7 @@ export class CreateCommentDTO {
 }
 
 export class GetAllCommentsDTO {
+    @IsOptional() // to Gateway DTO
     readonly taskId: string;
 
     @IsNotEmpty()
