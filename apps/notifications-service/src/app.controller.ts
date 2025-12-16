@@ -14,7 +14,7 @@ import { AppService } from "./app.service";
 
 // TODO
 
-// - Ver oq fazer aqui nesse Websocket...
+// - Fazer o WebSocket DEPOIS do Frontend !!!
 // - README detalhado...
 
 @Controller()

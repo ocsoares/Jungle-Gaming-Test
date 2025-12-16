@@ -2,6 +2,8 @@ import eslint from "@eslint/js";
 import typeScriptPlugin from "@typescript-eslint/eslint-plugin";
 import typeScriptParser from "@typescript-eslint/parser";
 import prettierRecommended from "eslint-plugin-prettier/recommended";
+import reactHooksPlugin from "eslint-plugin-react-hooks";
+import reactRefreshPlugin from "eslint-plugin-react-refresh";
 import sonarLintPlugin from "eslint-plugin-sonarjs";
 import { defineConfig } from "eslint/config";
 import { dirname } from "path";
@@ -16,11 +18,18 @@ export default defineConfig(
     ...tseslint.configs.recommended,
     prettierRecommended,
     sonarLintPlugin.configs.recommended,
+    reactHooksPlugin.configs.recommended,
+    reactRefreshPlugin.configs.recommended,
     {
         languageOptions: {
             parser: typeScriptParser,
             parserOptions: {
-                project: ["apps/*/tsconfig.json", "packages/**/tsconfig.json"],
+                project: [
+                    "apps/*/tsconfig.json",
+                    "apps/web/tsconfig.app.json",
+                    "apps/web/tsconfig.node.json",
+                    "packages/**/tsconfig.json",
+                ],
                 tsconfigRootDir: __dirname,
                 ecmaVersion: 2020,
                 sourceType: "module",
