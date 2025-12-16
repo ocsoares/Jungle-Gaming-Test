@@ -1,8 +1,13 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
+import { TypeOrmModule } from "@nestjs/typeorm";
 import serverConfig from "@repo/config/server.config";
+import { NotificationEntity } from "@repo/typeorm/entities";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
+import { TypeOrmOwnModule } from "./database/typeormown.module";
+import { INotificationRepository } from "./repositories/abstracts/notification.repository.interface";
+import { NotificationRepository } from "./repositories/implementations/notification.repository";
 
 @Module({
     imports: [
@@ -14,8 +19,13 @@ import { AppService } from "./app.service";
             ],
             load: [serverConfig],
         }),
+        TypeOrmOwnModule,
+        TypeOrmModule.forFeature([NotificationEntity]),
     ],
     controllers: [AppController],
-    providers: [AppService],
+    providers: [
+        AppService,
+        { provide: INotificationRepository, useClass: NotificationRepository },
+    ],
 })
 export class AppModule {}

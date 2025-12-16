@@ -4,7 +4,12 @@ import {
     NOTIFICATION_SERVICE_COMMENT_CREATED_MESSAGE,
     NOTIFICATION_SERVICE_NAME,
 } from "@repo/config";
-import { CreateCommentDTO, GetAllCommentsDTO } from "@repo/contracts";
+import {
+    CreateCommentDTO,
+    GetAllCommentsDTO,
+    INotificationCommentCreatedPayload,
+    NotificationEvent,
+} from "@repo/contracts";
 import { ICommentRepository } from "src/repositories/abstracts/comment.repository.interface";
 import { ITaskRepository } from "src/repositories/abstracts/task.repository.interface";
 import { IUserRepository } from "src/repositories/abstracts/user.repository.interface";
@@ -44,9 +49,21 @@ export class CommentsService {
 
         const commentCreated = await this.commentRepository.create(data);
 
+        const payload: INotificationCommentCreatedPayload = {
+            data: {
+                id: commentCreated.id,
+                content: commentCreated.content,
+                taskId: commentCreated.task.id,
+                authorId: commentCreated.author.id,
+                createdAt: commentCreated.createdAt,
+                updatedAt: commentCreated.updatedAt,
+                event: NotificationEvent.COMMENT_NEW,
+            },
+        };
+
         this.clientProxy.emit(
             NOTIFICATION_SERVICE_COMMENT_CREATED_MESSAGE,
-            commentCreated.id,
+            payload,
         );
 
         return this.commentMapper.toResponse(

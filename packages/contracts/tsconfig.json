@@ -6,7 +6,11 @@
     "declaration": true,
     "emitDeclarationOnly": false,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "paths": {
+      "@repo/typeorm": ["../../packages/database/typeorm/dist/index"],
+      "@repo/typeorm/*": ["../../packages/database/typeorm/dist/*"],
+    }
   },
   "include": ["./src/**/*.ts"],
   "exclude": ["node_modules", "dist"]

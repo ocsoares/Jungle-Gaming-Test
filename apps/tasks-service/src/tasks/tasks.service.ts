@@ -5,7 +5,14 @@ import {
     NOTIFICATION_SERVICE_TASK_CREATED_MESSAGE,
     NOTIFICATION_SERVICE_TASK_UPDATED_MESSAGE,
 } from "@repo/config";
-import { CreateTaskDTO, GetAllTasksDTO, UpdateTaskDTO } from "@repo/contracts";
+import {
+    CreateTaskDTO,
+    GetAllTasksDTO,
+    INotificationTaskCreatedPayload,
+    INotificationTaskUpdatedPayload,
+    NotificationEvent,
+    UpdateTaskDTO,
+} from "@repo/contracts";
 import { TaskNotFoundByIdException } from "src/comments/exceptions/comments.exceptionts";
 import { ITaskRepository } from "src/repositories/abstracts/task.repository.interface";
 import { IUserRepository } from "src/repositories/abstracts/user.repository.interface";
@@ -33,14 +40,28 @@ export class TasksService {
             throw new UserNotFoundByIdException();
         }
 
+        const usersId = Array.from(foundIds);
+
         const createdTask = await this.taskRepository.create({
             ...data,
-            usersId: Array.from(foundIds),
+            usersId,
         });
+
+        // "createdTask" Entity without "users"
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { users, comments, ...createdTaskWithoutUsers } = createdTask;
+
+        const payload: INotificationTaskCreatedPayload = {
+            data: {
+                ...createdTaskWithoutUsers,
+                usersId,
+                event: NotificationEvent.TASK_CREATED,
+            },
+        };
 
         this.clientProxy.emit(
             NOTIFICATION_SERVICE_TASK_CREATED_MESSAGE,
-            createdTask.id,
+            payload,
         );
 
         return this.taskMapper.toResponse(createdTask);
@@ -81,9 +102,19 @@ export class TasksService {
             data,
         );
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { users, comments, ...createdTaskWithoutUsers } = updatedTask;
+
+        const payload: INotificationTaskUpdatedPayload = {
+            data: {
+                ...createdTaskWithoutUsers,
+                event: NotificationEvent.TASK_UPDATED,
+            },
+        };
+
         this.clientProxy.emit(
             NOTIFICATION_SERVICE_TASK_UPDATED_MESSAGE,
-            updatedTask.id,
+            payload,
         );
 
         return this.taskMapper.toResponse(updatedTask);

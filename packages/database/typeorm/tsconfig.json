@@ -6,7 +6,11 @@
     "declaration": true,
     "emitDeclarationOnly": false,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "paths": {
+      "@repo/contracts": ["../../../packages/contracts/dist/index"],
+      "@repo/contracts/*": ["../../../packages/contracts/dist/*"],
+    }
   },
   "include": ["./src/**/*.ts"],
   "exclude": ["node_modules", "dist"]
