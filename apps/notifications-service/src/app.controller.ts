@@ -34,6 +34,8 @@ export class AppController {
         @Payload() payload: INotificationTaskUpdatedPayload,
     ): Promise<any> {
         console.log("payload no handleTaskUpdated:---------", payload);
+
+        await this.appService.taskUpdated(payload);
     }
 
     @MessagePattern(NOTIFICATION_SERVICE_COMMENT_CREATED_MESSAGE)

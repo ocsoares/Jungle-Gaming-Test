@@ -1,5 +1,8 @@
 import { Injectable } from "@nestjs/common";
-import { INotificationTaskCreatedPayload } from "@repo/contracts";
+import {
+    INotificationTaskCreatedPayload,
+    INotificationTaskUpdatedPayload,
+} from "@repo/contracts";
 import { NotificationEntity } from "@repo/typeorm/entities";
 import { INotificationRepository } from "./repositories/abstracts/notification.repository.interface";
 
@@ -13,5 +16,11 @@ export class AppService {
         payload: INotificationTaskCreatedPayload,
     ): Promise<NotificationEntity[]> {
         return await this.notificationRepository.taskCreated(payload);
+    }
+
+    async taskUpdated(
+        payload: INotificationTaskUpdatedPayload,
+    ): Promise<NotificationEntity> {
+        return this.notificationRepository.taskUpdated(payload);
     }
 }

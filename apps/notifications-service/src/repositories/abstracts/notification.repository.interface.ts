@@ -1,8 +1,14 @@
-import { INotificationTaskCreatedPayload } from "@repo/contracts";
+import {
+    INotificationTaskCreatedPayload,
+    INotificationTaskUpdatedPayload,
+} from "@repo/contracts";
 import { NotificationEntity } from "@repo/typeorm/entities";
 
 export abstract class INotificationRepository {
     abstract taskCreated(
         payload: INotificationTaskCreatedPayload,
     ): Promise<NotificationEntity[]>;
+    abstract taskUpdated(
+        payload: INotificationTaskUpdatedPayload,
+    ): Promise<NotificationEntity>;
 }
