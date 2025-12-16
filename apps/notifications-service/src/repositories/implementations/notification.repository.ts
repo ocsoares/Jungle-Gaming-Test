@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import {
+    INotificationCommentCreatedPayload,
     INotificationTaskCreatedPayload,
     INotificationTaskUpdatedPayload,
 } from "@repo/contracts";
@@ -41,7 +42,20 @@ export class NotificationRepository implements INotificationRepository {
             event,
         });
 
-        console.log("taskUpdated NOTIFICATIONS:", notifications);
+        return await this.notificationRepository.save(notifications);
+    }
+
+    async commentCreated(
+        payload: INotificationCommentCreatedPayload,
+    ): Promise<NotificationEntity> {
+        const { id: commentId, taskId, authorId, event } = payload.data;
+
+        const notifications = this.notificationRepository.create({
+            task: { id: taskId },
+            user: { id: authorId },
+            comment: { id: commentId },
+            event,
+        });
 
         return await this.notificationRepository.save(notifications);
     }

@@ -13,7 +13,6 @@ import {
 import { AppService } from "./app.service";
 
 // TODO
-// PERSISTIR as Notifications no Banco
 
 // - Ver oq fazer aqui nesse Websocket...
 // - README detalhado...
@@ -33,8 +32,6 @@ export class AppController {
     async handleTaskUpdated(
         @Payload() payload: INotificationTaskUpdatedPayload,
     ): Promise<any> {
-        console.log("payload no handleTaskUpdated:---------", payload);
-
         await this.appService.taskUpdated(payload);
     }
 
@@ -42,6 +39,6 @@ export class AppController {
     async handleCommentCreated(
         @Payload() payload: INotificationCommentCreatedPayload,
     ): Promise<any> {
-        console.log("payload no handleCommentCreated:---------", payload);
+        await this.appService.commentCreated(payload);
     }
 }

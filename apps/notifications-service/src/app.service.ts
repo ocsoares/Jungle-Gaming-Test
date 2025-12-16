@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import {
+    INotificationCommentCreatedPayload,
     INotificationTaskCreatedPayload,
     INotificationTaskUpdatedPayload,
 } from "@repo/contracts";
@@ -22,5 +23,11 @@ export class AppService {
         payload: INotificationTaskUpdatedPayload,
     ): Promise<NotificationEntity> {
         return this.notificationRepository.taskUpdated(payload);
+    }
+
+    async commentCreated(
+        payload: INotificationCommentCreatedPayload,
+    ): Promise<NotificationEntity> {
+        return await this.notificationRepository.commentCreated(payload);
     }
 }
