@@ -34,16 +34,20 @@ import { TasksController } from "./tasks/tasks.controller";
                 name: AUTH_SERVICE_NAME,
                 transport: Transport.TCP,
                 options: {
-                    host: String(process.env.AUTH_SERVICE_HOST || "localhost"),
-                    port: Number(process.env.AUTH_SERVICE_PORT),
+                    host: String(
+                        process.env.AUTH_SERVICE_HOST || "auth-service",
+                    ),
+                    port: Number(process.env.AUTH_SERVICE_PORT || 3002),
                 },
             },
             {
                 name: TASK_SERVICE_NAME,
                 transport: Transport.TCP,
                 options: {
-                    host: String(process.env.TASK_SERVICE_HOST || "localhost"),
-                    port: Number(process.env.TASK_SERVICE_PORT),
+                    host: String(
+                        process.env.TASK_SERVICE_HOST || "tasks-service",
+                    ),
+                    port: Number(process.env.TASK_SERVICE_PORT || 3003),
                 },
             },
         ]),

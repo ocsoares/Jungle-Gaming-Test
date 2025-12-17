@@ -28,7 +28,7 @@ export class HealthController {
                     transport: Transport.RMQ,
                     options: {
                         urls: [
-                            `amqp://${process.env.RABBITMQ_DEFAULT_USER}:${process.env.RABBITMQ_DEFAULT_PASS}@${process.env.RABBITMQ_HOST}:5672`,
+                            `amqp://${process.env.RABBITMQ_DEFAULT_USER || "rabbit"}:${process.env.RABBITMQ_DEFAULT_PASS || "rabbit123"}@${process.env.RABBITMQ_HOST || "rabbitmq"}:5672`,
                         ],
                         queue:
                             process.env.RABBITMQ_QUEUE || "notifications_queue",
@@ -40,8 +40,8 @@ export class HealthController {
                 this.microservice.pingCheck("auth-service", {
                     transport: Transport.TCP,
                     options: {
-                        host: process.env.AUTH_SERVICE_HOST,
-                        port: Number(process.env.AUTH_SERVICE_PORT),
+                        host: process.env.AUTH_SERVICE_HOST || "auth-service",
+                        port: Number(process.env.AUTH_SERVICE_PORT || 3002),
                     },
                 }),
 
@@ -50,8 +50,8 @@ export class HealthController {
                 this.microservice.pingCheck("task-service", {
                     transport: Transport.TCP,
                     options: {
-                        host: process.env.TASK_SERVICE_HOST,
-                        port: Number(process.env.TASK_SERVICE_PORT),
+                        host: process.env.TASK_SERVICE_HOST || "tasks-service",
+                        port: Number(process.env.TASK_SERVICE_PORT || 3003),
                     },
                 }),
         ]);

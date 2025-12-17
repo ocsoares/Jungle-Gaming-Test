@@ -27,9 +27,11 @@ import { UserService } from "./user/user.service";
         TypeOrmOwnModule,
         TypeOrmModule.forFeature([UserEntity]),
         JwtModule.register({
-            secret: process.env.JWT_SECRET,
+            secret: process.env.JWT_SECRET || "jwtpass123", // To easy run in DOCKER in DEVELOPMENT !!
             signOptions: {
-                expiresIn: Number(process.env.JWT_ACCESS_TOKEN_EXPIRES_IN),
+                expiresIn: Number(
+                    process.env.JWT_ACCESS_TOKEN_EXPIRES_IN || 900,
+                ),
             },
         }),
     ],

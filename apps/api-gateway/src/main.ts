@@ -38,10 +38,10 @@ async function bootstrap() {
         useGlobalPrefix: true,
     });
 
-    await app.listen(Number(process.env.API_GATEWAY_PORT));
+    await app.listen(Number(process.env.API_GATEWAY_PORT || 3001));
 
     Logger.log(
-        `🚀 API Gateway is running on port ${process.env.API_GATEWAY_PORT}/${GLOBAL_PREFIX}`,
+        `🚀 API Gateway is running on port ${process.env.API_GATEWAY_PORT || 3001}/${GLOBAL_PREFIX}`,
     );
 }
 bootstrap();

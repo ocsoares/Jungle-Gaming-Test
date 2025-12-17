@@ -9,8 +9,8 @@ async function bootstrap() {
         {
             transport: Transport.TCP,
             options: {
-                host: String(process.env.AUTH_SERVICE_HOST || "localhost"),
-                port: Number(process.env.AUTH_SERVICE_PORT),
+                host: String(process.env.AUTH_SERVICE_HOST || "auth-service"),
+                port: Number(process.env.AUTH_SERVICE_PORT || 3002),
             },
         },
     );
@@ -18,7 +18,7 @@ async function bootstrap() {
     await app.listen();
 
     Logger.log(
-        `🚀 Auth Service is running on port ${process.env.AUTH_SERVICE_PORT} via TCP Protocol`,
+        `🚀 Auth Service is running on port ${process.env.AUTH_SERVICE_PORT || 3002} via TCP Protocol`,
     );
 }
 bootstrap();

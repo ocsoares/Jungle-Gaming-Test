@@ -14,6 +14,8 @@ import { AppService } from "./app.service";
 
 // TODO
 // - README detalhado...
+// Dockerfile pra apps/web
+// Tentar subir o Projeto INTEIRO apenas com o Docker (em outra Pasta)
 
 @Controller()
 export class AppController {

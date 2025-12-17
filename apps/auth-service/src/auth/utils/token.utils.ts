@@ -18,7 +18,9 @@ export class TokenUtils {
     ): Promise<ILoginResponse> {
         return {
             token: await jwtService.signAsync(payload, {
-                expiresIn: Number(process.env.JWT_REFRESH_TOKEN_EXPIRES_IN),
+                expiresIn: Number(
+                    process.env.JWT_REFRESH_TOKEN_EXPIRES_IN || 604800, // to easy run in Docker DEVELOPMENT
+                ),
             }),
         };
     }

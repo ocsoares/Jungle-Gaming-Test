@@ -9,8 +9,8 @@ async function bootstrap() {
         {
             transport: Transport.TCP,
             options: {
-                host: String(process.env.TASK_SERVICE_HOST || "localhost"),
-                port: Number(process.env.TASK_SERVICE_PORT),
+                host: String(process.env.TASK_SERVICE_HOST || "tasks-service"),
+                port: Number(process.env.TASK_SERVICE_PORT || 3003),
             },
         },
     );
@@ -18,7 +18,7 @@ async function bootstrap() {
     await app.listen();
 
     Logger.log(
-        `🚀 Task Service is running on port ${process.env.TASK_SERVICE_PORT} via TCP Protocol`,
+        `🚀 Task Service is running on port ${process.env.TASK_SERVICE_PORT || 3003} via TCP Protocol`,
     );
 }
 bootstrap();

@@ -25,7 +25,7 @@ export interface IServerConfig {
 export default registerAs<IServerConfig>("server", () => {
     return {
         postgres: {
-            host: process.env.POSTGRES_HOST || "localhost",
+            host: process.env.POSTGRES_HOST || "db",
             port: process.env.POSTGRES_PORT
                 ? parseInt(process.env.POSTGRES_PORT, 10)
                 : 5432,
@@ -38,12 +38,12 @@ export default registerAs<IServerConfig>("server", () => {
             password: process.env.RABBITMQ_DEFAULT_PASS || "rabbit123",
         },
         auth_service: {
-            host: process.env.AUTH_SERVICE_HOST,
-            port: Number(process.env.AUTH_SERVICE_PORT),
+            host: process.env.AUTH_SERVICE_HOST || "auth-service",
+            port: Number(process.env.AUTH_SERVICE_PORT || 3002),
         },
         task_service: {
-            host: process.env.TASK_SERVICE_HOST,
-            port: Number(process.env.TASK_SERVICE_PORT),
+            host: process.env.TASK_SERVICE_HOST || "tasks-service",
+            port: Number(process.env.TASK_SERVICE_PORT || 3003),
         },
     };
 });

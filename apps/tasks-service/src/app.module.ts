@@ -35,9 +35,9 @@ import { TasksService } from "./tasks/tasks.service";
                 transport: Transport.RMQ,
                 options: {
                     urls: [
-                        `amqp://${process.env.RABBITMQ_DEFAULT_USER}:${process.env.RABBITMQ_DEFAULT_PASS}@${process.env.RABBITMQ_HOST}:5672`,
+                        `amqp://${process.env.RABBITMQ_DEFAULT_USER || "rabbit"}:${process.env.RABBITMQ_DEFAULT_PASS || "rabbit123"}@${process.env.RABBITMQ_HOST || "rabbitmq"}:5672`,
                     ],
-                    queue: process.env.RABBITMQ_QUEUE,
+                    queue: process.env.RABBITMQ_QUEUE || "notifications_queue",
                     queueOptions: { durable: true },
                 },
             },
