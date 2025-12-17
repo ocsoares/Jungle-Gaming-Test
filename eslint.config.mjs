@@ -2,10 +2,8 @@ import eslint from "@eslint/js";
 import typeScriptPlugin from "@typescript-eslint/eslint-plugin";
 import typeScriptParser from "@typescript-eslint/parser";
 import prettierRecommended from "eslint-plugin-prettier/recommended";
-import reactHooksPlugin from "eslint-plugin-react-hooks";
-import reactRefreshPlugin from "eslint-plugin-react-refresh";
 import sonarLintPlugin from "eslint-plugin-sonarjs";
-import { defineConfig } from "eslint/config";
+import { defineConfig, globalIgnores } from "eslint/config";
 import { dirname } from "path";
 import tseslint from "typescript-eslint";
 import { fileURLToPath } from "url";
@@ -14,12 +12,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 export default defineConfig(
+    globalIgnores(["**/dist/**", "dist/**", "**/node_modules/**"]),
+
     eslint.configs.recommended,
     ...tseslint.configs.recommended,
     prettierRecommended,
     sonarLintPlugin.configs.recommended,
-    reactHooksPlugin.configs.recommended,
-    reactRefreshPlugin.configs.recommended,
     {
         languageOptions: {
             parser: typeScriptParser,
