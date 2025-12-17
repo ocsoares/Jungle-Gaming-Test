@@ -22,6 +22,7 @@ import { CommentEntity, TaskEntity, UserEntity } from "@repo/typeorm/entities";
                     database: pg!.database,
                     entities: [UserEntity, TaskEntity, CommentEntity],
                     synchronize: true, // in DEVELOPMENT
+                    // DELETAR os Volumes no Docker, tirar esse SYNCHRONIZE e colocar Entities e Migrations !!!!
                 };
             },
         }),
