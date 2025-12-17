@@ -4,30 +4,34 @@ import {
     INotificationTaskCreatedPayload,
     INotificationTaskUpdatedPayload,
 } from "@repo/contracts";
-import { NotificationEntity } from "@repo/typeorm/entities";
+import { NotificationsGateway } from "./notifications.gateway";
 import { INotificationRepository } from "./repositories/abstracts/notification.repository.interface";
 
 @Injectable()
 export class AppService {
     constructor(
         private readonly notificationRepository: INotificationRepository,
+        private readonly notificationsGateway: NotificationsGateway,
     ) {}
 
-    async taskCreated(
-        payload: INotificationTaskCreatedPayload,
-    ): Promise<NotificationEntity[]> {
-        return await this.notificationRepository.taskCreated(payload);
+    async taskCreated(payload: INotificationTaskCreatedPayload): Promise<void> {
+        const result = await this.notificationRepository.taskCreated(payload);
+
+        return this.notificationsGateway.emitTaskCreated(result);
     }
 
-    async taskUpdated(
-        payload: INotificationTaskUpdatedPayload,
-    ): Promise<NotificationEntity> {
-        return this.notificationRepository.taskUpdated(payload);
+    async taskUpdated(payload: INotificationTaskUpdatedPayload): Promise<void> {
+        const result = await this.notificationRepository.taskUpdated(payload);
+
+        return this.notificationsGateway.emitTaskUpdated(result);
     }
 
     async commentCreated(
         payload: INotificationCommentCreatedPayload,
-    ): Promise<NotificationEntity> {
-        return await this.notificationRepository.commentCreated(payload);
+    ): Promise<void> {
+        const result =
+            await this.notificationRepository.commentCreated(payload);
+
+        return this.notificationsGateway.emitCommentCreated(result);
     }
 }
