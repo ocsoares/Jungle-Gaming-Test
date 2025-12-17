@@ -3,13 +3,18 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 import { defineConfig } from "vite";
 
-// https://vite.dev/config/
-export default defineConfig({
-    plugins: [react(), tailwindcss()],
-    resolve: {
-        alias: {
-            // eslint-disable-next-line @typescript-eslint/naming-convention
-            "@": path.resolve(__dirname, "./src"),
+export default defineConfig(() => {
+    return {
+        server: {
+            host: "localhost",
+            port: 5173,
         },
-    },
+        plugins: [react(), tailwindcss()],
+        resolve: {
+            alias: {
+                // eslint-disable-next-line @typescript-eslint/naming-convention
+                "@": path.resolve(__dirname, "./src"),
+            },
+        },
+    };
 });

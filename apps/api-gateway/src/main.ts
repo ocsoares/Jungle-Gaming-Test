@@ -20,6 +20,12 @@ async function bootstrap() {
         }),
     );
 
+    app.enableCors({
+        origin: ["http://localhost:5173"],
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        credentials: true,
+    });
+
     const config = new DocumentBuilder()
         .setTitle("Jungle-Gaming-Test")
         .setVersion("1.0")
