@@ -4,6 +4,8 @@ export class CreateNotificationsTable1765851827715 implements MigrationInterface
     name = "CreateNotificationsTable1765851827715";
 
     public async up(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`);
+
         await queryRunner.query(
             `CREATE TYPE "public"."notification_event_enum" AS ENUM('TASK_CREATED', 'TASK_UPDATED', 'COMMENT_NEW')`,
         );
@@ -15,8 +17,6 @@ export class CreateNotificationsTable1765851827715 implements MigrationInterface
                 "taskId" uuid NOT NULL,
                 "commentId" uuid,
                 "event" "public"."notification_event_enum" NOT NULL,
-                "message" character varying NOT NULL,
-                "readAt" TIMESTAMP,
                 "createdAt" TIMESTAMP NOT NULL DEFAULT now(),
                 "updatedAt" TIMESTAMP NOT NULL DEFAULT now(),
                 CONSTRAINT "PK_notifications_id" PRIMARY KEY ("id"),

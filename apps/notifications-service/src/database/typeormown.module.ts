@@ -31,7 +31,9 @@ import {
                         TaskEntity,
                         CommentEntity,
                     ],
-                    synchronize: true, // in DEVELOPMENT
+                    migrations: [String(pg!.migrationsPath)],
+                    // synchronize: false,
+                    // migrationsRun: true,
                 };
             },
         }),

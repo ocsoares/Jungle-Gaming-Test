@@ -1,4 +1,5 @@
 import { registerAs } from "@nestjs/config";
+import path from "path";
 
 export interface IServerConfig {
     postgres: {
@@ -7,6 +8,7 @@ export interface IServerConfig {
         username?: string;
         password?: string;
         database?: string;
+        migrationsPath?: string;
     };
     rabbitmq: {
         username?: string;
@@ -32,6 +34,10 @@ export default registerAs<IServerConfig>("server", () => {
             username: process.env.POSTGRES_USER || "postgres",
             password: process.env.POSTGRES_PASSWORD || "postgres123",
             database: process.env.POSTGRES_DB || "postgres_db",
+            migrationsPath: path.resolve(
+                __dirname,
+                "../../database/typeorm/dist/migrations/*.js",
+            ),
         },
         rabbitmq: {
             username: process.env.RABBITMQ_DEFAULT_USER || "rabbit",

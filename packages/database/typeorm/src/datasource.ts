@@ -21,5 +21,4 @@ export const AppDataSource = new DataSource({
     database: process.env.POSTGRES_DB || "postgres_db",
     entities: [UserEntity, TaskEntity, CommentEntity, TaskHistoryEntity],
     migrations: ["src/migrations/*.ts"],
-    synchronize: true, // in DEVELOPMENT
 });

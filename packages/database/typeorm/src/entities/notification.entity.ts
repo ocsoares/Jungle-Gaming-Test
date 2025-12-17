@@ -16,8 +16,8 @@ export class NotificationEntity {
     @PrimaryGeneratedColumn("uuid")
     readonly id: string;
 
-    @ManyToOne(() => UserEntity, { onDelete: "CASCADE" })
-    readonly user: UserEntity;
+    @ManyToOne(() => UserEntity, { onDelete: "CASCADE", nullable: true })
+    readonly user?: UserEntity;
 
     @ManyToOne(() => TaskEntity, { onDelete: "CASCADE" })
     readonly task: TaskEntity;
