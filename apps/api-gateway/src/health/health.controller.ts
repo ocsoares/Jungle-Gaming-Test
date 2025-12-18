@@ -3,6 +3,7 @@ import { Transport } from "@nestjs/microservices";
 import {
     HealthCheck,
     HealthCheckService,
+    HttpHealthIndicator,
     MicroserviceHealthIndicator,
 } from "@nestjs/terminus";
 
@@ -11,6 +12,7 @@ export class HealthController {
     constructor(
         private health: HealthCheckService,
         private microservice: MicroserviceHealthIndicator,
+        private http: HttpHealthIndicator,
     ) {}
 
     @Get("liveness")
@@ -35,6 +37,15 @@ export class HealthController {
                     },
                 }),
 
+            // API Gateway
+            () =>
+                this.http.pingCheck(
+                    "api-gateway",
+                    `http://${process.env.API_GATEWAY_HOST || "api-gateway"}:${
+                        process.env.API_GATEWAY_PORT || 3001
+                    }/api/health/liveness`,
+                ),
+
             // Auth Service
             () =>
                 this.microservice.pingCheck("auth-service", {
@@ -54,6 +65,27 @@ export class HealthController {
                         port: Number(process.env.TASK_SERVICE_PORT || 3003),
                     },
                 }),
+
+            // Notification Service
+            () =>
+                this.microservice.pingCheck("notifications-service", {
+                    transport: Transport.TCP,
+                    options: {
+                        host:
+                            process.env.NOTIFICATIONS_SERVICE_HOST ||
+                            "notifications-service",
+                        port: Number(
+                            process.env.NOTIFICATIONS_SERVICE_PORT || 3004,
+                        ),
+                    },
+                }),
+
+            // Web
+            // () =>
+            //     this.http.pingCheck(
+            //         "web",
+            //         `http://${process.env.WEB_HOST || "web"}:${process.env.WEB_PORT || 5173}`,
+            //     ),
         ]);
     }
 }

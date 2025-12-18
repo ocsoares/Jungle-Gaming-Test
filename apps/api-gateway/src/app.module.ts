@@ -1,3 +1,4 @@
+import { HttpModule } from "@nestjs/axios";
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { APP_GUARD } from "@nestjs/core";
@@ -29,6 +30,7 @@ import { TasksController } from "./tasks/tasks.controller";
             ],
         }),
         TerminusModule,
+        HttpModule,
         ClientsModule.register([
             {
                 name: AUTH_SERVICE_NAME,
