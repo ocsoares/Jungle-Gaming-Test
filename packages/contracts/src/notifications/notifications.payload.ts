@@ -1,4 +1,13 @@
-import { TaskEntity } from "@repo/typeorm/entities";
+export interface TaskPayloadDTO {
+    id: string;
+    title: string;
+    description: string;
+    due_date: Date;
+    priority: "low" | "medium" | "high" | "urgent";
+    status: "todo" | "in_progress" | "review" | "done";
+    createdAt: Date;
+    updatedAt: Date;
+}
 
 export enum NotificationEvent {
     TASK_CREATED = "TASK_CREATED",
@@ -7,14 +16,14 @@ export enum NotificationEvent {
 }
 
 export interface INotificationTaskCreatedPayload {
-    readonly data: Omit<TaskEntity, "users" | "comments"> & {
+    readonly data: Omit<TaskPayloadDTO, "users" | "comments"> & {
         usersId: string[];
         event: NotificationEvent;
     };
 }
 
 export interface INotificationTaskUpdatedPayload {
-    readonly data: Omit<TaskEntity, "users" | "comments"> & {
+    readonly data: Omit<TaskPayloadDTO, "users" | "comments"> & {
         event: NotificationEvent;
     };
 }

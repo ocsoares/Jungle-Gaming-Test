@@ -22,6 +22,9 @@ export class NotificationRepository implements INotificationRepository {
         const { id: taskId, usersId, event } = payload.data;
 
         const notifications = usersId.map((userId) =>
+            // To fix CIRCULAR Error
+
+            // @ts-ignore
             this.notificationRepository.create({
                 user: { id: userId },
                 task: { id: taskId },
@@ -37,11 +40,13 @@ export class NotificationRepository implements INotificationRepository {
     ): Promise<NotificationEntity> {
         const { id: taskId, event } = payload.data;
 
+        // @ts-ignore
         const notifications = this.notificationRepository.create({
             task: { id: taskId },
             event,
         });
 
+        // @ts-ignore
         return await this.notificationRepository.save(notifications);
     }
 
@@ -50,6 +55,7 @@ export class NotificationRepository implements INotificationRepository {
     ): Promise<NotificationEntity> {
         const { id: commentId, taskId, authorId, event } = payload.data;
 
+        // @ts-ignore
         const notifications = this.notificationRepository.create({
             task: { id: taskId },
             user: { id: authorId },
@@ -57,6 +63,7 @@ export class NotificationRepository implements INotificationRepository {
             event,
         });
 
+        // @ts-ignore
         return await this.notificationRepository.save(notifications);
     }
 }

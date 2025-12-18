@@ -1,4 +1,3 @@
-import { NotificationEvent } from "@repo/contracts";
 import {
     Column,
     CreateDateColumn,
@@ -10,6 +9,12 @@ import {
 import { CommentEntity } from "./comment.entity";
 import { TaskEntity } from "./task.entity";
 import { UserEntity } from "./user.entity";
+
+export enum NotificationEvent {
+    TASK_CREATED = "TASK_CREATED",
+    TASK_UPDATED = "TASK_UPDATED",
+    TASK_DELETED = "TASK_DELETED",
+}
 
 @Entity({ name: "notifications" })
 export class NotificationEntity {
@@ -29,7 +34,7 @@ export class NotificationEntity {
         type: "enum",
         enum: NotificationEvent,
     })
-    readonly event: NotificationEvent;
+    event!: NotificationEvent;
 
     @CreateDateColumn()
     readonly createdAt: Date;
